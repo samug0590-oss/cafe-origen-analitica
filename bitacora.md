@@ -1,4 +1,4 @@
-Dia 1 (11/17/2026)
+Dia 1 (17/11/2026)
 
 ## Diccionario de datos
 
@@ -33,3 +33,20 @@ cliente C03 se repite 2 veces (id=3, id=9)
 
 Puede ser problema o no, ya que puede definir que un mismo cliente hizo diferentes compras, por ejemplo en periodos de tiempo distintos
 Se dejara, ya que no necesariamente sea un problema, y no va a causar errores en los calculos
+
+Dia 2 (18/11/2026)
+
+## PseudoCodigo
+
+Indicador: ValorVenta
+Recorro: Cada cantidad y precio
+Condicion: Que la cantidad y el precio sean mayores a cero
+Accion: Multiplicar la cantidad por el precio, sumar 1 al contador
+Al terminar: Vuelvo al contador
+
+Indicador: TotalVendido
+Recorro: Cada cantiad y precio
+Condicion: Que la cantiad y el precio sean mayores a cero
+Accion: Multiplicar la cantidad por el precio y sumar ese resultado con cada uno de los ValorVenta ya calculados, sumar 1 al contador
+Al terminar: Volver al contador
+
