@@ -1,0 +1,23 @@
+const ventas = require('./datos')
+const {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto} = require('./analitica');
+
+//totalVendido
+console.log(totalVendido(ventas))
+console.log(totalVendidoM(ventas))
+console.log(compFunciones(totalVendido(ventas), totalVendidoM(ventas)))
+
+//unidadesVendidas
+console.log(unidadesVendidas(ventas))
+console.log(unidadesVendidasM(ventas))
+console.log(compFunciones(unidadesVendidas(ventas), unidadesVendidasM(ventas)))
+
+//ventasPorCiudad
+console.log(ventasPorCiudad(ventas, "medellín"))
+console.log(ventasPorCiudadM(ventas, "medellín"))
+console.log(compFunciones(ventasPorCiudad(ventas, "medellín"), ventasPorCiudadM(ventas, "medellín")))
+
+//totalPorCiudad
+console.log(totalPorCiudad(ventas))
+
+//unidadesPorProducto
+console.log(unidadesPorProducto(ventas))

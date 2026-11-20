@@ -1,3 +1,5 @@
+const ventas = require("./datos");
+
 function valorVenta(venta) {
     return venta.cantidad * venta.precio;
 }
@@ -56,4 +58,53 @@ function ventasPorCiudad(ventas, ciudad) {
     return suma
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad};
+function totalVendidoM(ventas) {
+    return ventas.reduce((totalActual, venta) => totalActual + valorVenta(venta),0)
+}
+
+function unidadesVendidasM(ventas) {
+    return ventas.reduce((totalActual, venta) => totalActual + venta.cantidad,0)
+}
+
+function ventasPorCiudadM(ventas, ciudad) {
+    const ciudadBuscada = ciudad.trim().toLowerCase()
+    return ventas.filter(venta => venta.ciudad.trim().toLowerCase() === ciudadBuscada).reduce((suma, venta) => suma + valorVenta(venta), 0);
+}
+
+function compFunciones(funcion1, funcion2) {
+    if (funcion1 === funcion2) {
+        return "OK"
+    } else {
+        return "DIFERENTE"
+    }
+}
+
+function totalPorCiudad(ventas) {
+    let porCiudad = {}
+    for (const venta of ventas) {
+        let clave = venta.ciudad.trim().toLowerCase()
+        if (porCiudad[clave] === undefined) {
+            porCiudad[clave] = 0;
+        }
+        porCiudad[clave] = porCiudad[clave] + valorVenta(venta)
+    }
+    return porCiudad
+}
+
+function unidadesPorProducto(ventas) {
+    let porProducto = {}
+    for (const venta of ventas) {
+        let clave = venta.producto.trim().toLowerCase()
+        if (porProducto[clave] === undefined) {
+            porProducto[clave] = 0;
+        }
+        porProducto[clave] = porProducto[clave] + venta.cantidad
+    }
+    return porProducto
+}
+
+function topProductosPorValor(ventas, k) {
+    
+}
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto};
