@@ -115,18 +115,39 @@ Decision y porque: Resulta 0 ya que no hay ventas por lo tanto el valor es 0
 
 Trazas manuales
 
-|Vuelta|Candidato actual|Valor venta|Operacion|
-|------|----------------|-----------|---------|
-|inicio|null            |0          |
-|1     |id = 1          |84000      |
-|2     |id = 1          |26000      |
-|3     |id = 3          |95000      |
-|4     |id = 3          |95000      |
-|5     |id = 5          |135000     |
-|6     |id = 5          |135000     |
-|7     |id = 5          |135000     |
-|8     |id = 5          |135000     |
-|9     |id = 5          |135000     |
-|10    |id = 10         |168000     |
-|11    |id = 10         |168000     |
-|12    |id = 10         |168000     |
+ventaMayor:
+
+|Vuelta|Candidato actual|Valor venta actual|Valor venta candidato|Operacion                   |
+|------|----------------|------------------|---------------------|----------------------------|
+|inicio|null            |0                 |84000                |vVA < vVC = vVA <= vVC true |
+|1     |id = 1          |84000             |26000                |vVA < vVC              false|
+|2     |id = 1          |84000             |95000                |vVA < vVC = vVA <= vVC true |
+|3     |id = 3          |95000             |42000                |vVA < vVC              false|
+|4     |id = 3          |95000             |135000               |vVA < vVC = vVA <= vVC true |
+|5     |id = 5          |135000            |52000                |vVA < vVC              false|
+|6     |id = 5          |135000            |120000               |vVA < vVC              false|
+|7     |id = 5          |135000            |0                    |vVA < vVC              false|
+|8     |id = 5          |135000            |90000                |vVA < vVC              false|
+|9     |id = 5          |135000            |168000               |vVA < vVC = vVA <= vVC true |
+|10    |id = 10         |168000            |95000                |vVA < vVC              false|
+|11    |id = 10         |168000            |78000                |vVA < vVC              false|
+|12    |id = 10         |168000            |null                 |vVA < vVC              false|
+
+Dia 4 (20/11/2026)
+ventasPorCiudad:
+
+|Vuelta|Ciudad elegida|Valor actual    |Ciudad siguiente|Valor venta ciudad siguiente|Operacion                         |
+|------|--------------|----------------|----------------|----------------------------|----------------------------------|
+|inicio|Medellín      |0               |Medellín        |84000                       |cE === cS (true) => vA = vA + vVCS|
+|1     |Medelín       |84000           |Bogotá          |26000                       |cE === cS (false)                 |
+|2     |Medellín      |84000           |Cali            |95000                       |cE === cS (false)                 |
+|3     |Medellín      |84000           |Medellín        |42000                       |cE === cS (true) => vA = vA + vVCS|
+|4     |Medellín      |126000          |Medellín        |135000                      |cE === cS (true) => vA = vA + vVCS|
+|5     |Medellín      |261000          |Bogotá          |52000                       |cE === cS (false)                 |
+|6     |Medellín      |261000          |Bogotá          |120000                      |cE === cS (false)                 |
+|7     |Medellín      |261000          |Cali            |0                           |cE === cS (false)                 |
+|8     |Medellín      |261000          |Cali            |90000                       |cE === cS (false)                 |
+|9     |Medellín      |261000          |Pereira         |168000                      |cE === cS (false)                 |
+|10    |Medellín      |261000          |Medellin        |95000                       |cE === cS (true) => vA = vA + vVCS|
+|11    |Medellín      |356000          |Bogotá          |78000                       |cE === cS (false)                 |
+|12    |Medellín      |356000          |null            |null                        |cE === cS (false)                 |
