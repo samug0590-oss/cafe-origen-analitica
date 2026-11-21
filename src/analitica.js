@@ -104,7 +104,17 @@ function unidadesPorProducto(ventas) {
 }
 
 function topProductosPorValor(ventas, k) {
-    
+    let porProducto = {}
+    for (const venta of ventas) {
+        let clave = venta.producto.trim().toLowerCase()
+        if (porProducto[clave] === undefined) {
+            porProducto[clave] = 0;
+        }
+        porProducto[clave] = porProducto[clave] + valorVenta(venta)
+    }
+    const entradasPorProducto = Object.entries(porProducto)
+    entradasPorProducto.sort((a, b) => b[1] - a[1])
+    return entradasPorProducto.slice(0, k)
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto};
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor};

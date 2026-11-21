@@ -1,5 +1,5 @@
 const ventas = require('./datos')
-const {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto} = require('./analitica');
+const {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor} = require('./analitica');
 
 //totalVendido
 console.log(totalVendido(ventas))
@@ -21,3 +21,6 @@ console.log(totalPorCiudad(ventas))
 
 //unidadesPorProducto
 console.log(unidadesPorProducto(ventas))
+
+//topProductosPorValor
+console.log(topProductosPorValor(ventas, 3))
