@@ -117,4 +117,14 @@ function topProductosPorValor(ventas, k) {
     return entradasPorProducto.slice(0, k)
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor};
+function ventasDelDia(ventas, fecha) {
+    let delDia = []
+    for (const venta of ventas) {
+        if (venta.fecha.trim() === fecha.trim()) {
+            delDia.push(venta)
+        }
+    }
+    return delDia
+}
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia};

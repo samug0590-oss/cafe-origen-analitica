@@ -151,3 +151,63 @@ ventasPorCiudad:
 |10    |Medellín      |261000          |Medellin        |95000                       |cE === cS (true) => vA = vA + vVCS|
 |11    |Medellín      |356000          |Bogotá          |78000                       |cE === cS (false)                 |
 |12    |Medellín      |356000          |null            |null                        |cE === cS (false)                 |
+
+Dia 5 (21/11/2026)
+totalVendidoM:
+¿Qué recorro?	ventas
+¿Qué filtro?	No es un filtro directo (if), pero se toma solo el valor total de esa venta
+¿Qué transformo?    Nada se transforma
+¿Qué acumulo?	El acumulador, suma todo
+¿Cómo agrupo?	No agrupo
+
+unidadesVendidasM:
+¿Qué recorro?	ventas
+¿Qué filtro?	No es un filtro directo (if), pero se toma solo la cantidad de esa venta
+¿Qué transformo?	Nada se transforma
+¿Qué acumulo?	El acumulador, suma todo
+¿Cómo agrupo?	No agrupo
+
+ventasPorCiudad:
+¿Qué recorro?	ventas
+¿Qué filtro?	No es un filtro directo (if), pero se toma solo la ciudad de esa venta
+¿Qué transformo?	La ciudad se suaviza para que todas sean iguales
+¿Qué acumulo?	El acumulador, suma todo
+¿Cómo agrupo?	No agrupo
+
+totalPorCiudad:
+¿Qué recorro?	ventas
+¿Qué filtro?	Primero se filtran como antes, solo tomando la ciudad, luego si el acumulador es "undefined" se le asigna valor a 0
+¿Qué transformo?	La clave (ciudad) se suaviza para que cada ciudad sea igual
+¿Qué acumulo?	El acumulador, suma el valor de cada clave(ciudad) respectivamente
+¿Cómo agrupo?	ciudad
+
+unidadesPorProducto:
+¿Qué recorro?	ventas
+¿Qué filtro?	Primero se filtran como antes, solo tomando el producto, luego si el acumulador es "undefined" se le asigna valor a 0
+¿Qué transformo?	La clave (producto) se suaviza para que cada producto sea igual
+¿Qué acumulo?	El acumulador, suma la cantidad de cada clave(producto) respectivamente
+¿Cómo agrupo?	producto
+
+topProductosPorValor:
+¿Qué recorro?	ventas
+¿Qué filtro?	Primero se filtran como antes, solo tomando el producto, luego si el acumulador es "undefined" se le asigna valor a 0
+¿Qué transformo?	La clave (producto) se suaviza para que cada producto sea igual
+¿Qué acumulo?	El acumulador, suma la cantidad de cada clave(producto) respectivamente
+¿Cómo agrupo?	producto
+
+## Registro de depuracion
+Error 1: Bogota varias veces en totalPorCiudad
+Síntoma: Bogota aparece varias veces en el listado con ventas distinas
+Entrada que lo produce: Bogotá , Bogotá, bogotá
+Hipotesis: Creo que el agrupador compara los datos y los toma como distintos
+Prueba realizada: Imprimi en consola la funcion y salieron varios resultados en vez de uno
+Causa: Lac clases no se normalizaban, faltan trim() y toLowerCase()
+Correccion: Normalizar la clave antes de agrupar. Mi version lo hace en la linea 85 de analitica.js, lo pruebo en depuracion.js
+
+Error 2: Ticket promedio daba NaN en un dia sin ventas
+Sintoma: Nan aparece como resultado en la funcion ticketPromedio, en un dia sin ventas
+Entrada que lo produce: No hay una entrada real que lo produzca, ya que el dia no tiene ventas
+Hipotesis: Creo que es porque al no haber ventas, se toma como 0, y al final se dividiria 0/0, en javaScript eso es NaN
+Prueba realizada: Imprimi en consola la funcion con el un argumento vacio para simular un dia sin ventas, salio NaN
+Causa: El total se divide con el contador y ambos son 0, falta un comprobante
+Correcion: Se usa el if que revise si el contador(cantidaValidas) es 0. Mi version lo hace en la linea 42 de analitica.js, lo pruebo en depuracion.js
