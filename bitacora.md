@@ -270,7 +270,7 @@ Funcion: totalPorCiudadI
 |10.000->100.000|20.000           |200.000            |10    |
 
 Funcion: primeraVentaI
-    
+
 |Paso de tamaño |Operaciones antes|Operaciones despues|Factor|
 |---------------|-----------------|-------------------|------|
 |100->1.000     |1                |1                  |1     |    
