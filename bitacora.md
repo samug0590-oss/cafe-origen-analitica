@@ -211,3 +211,77 @@ Hipotesis: Creo que es porque al no haber ventas, se toma como 0, y al final se 
 Prueba realizada: Imprimi en consola la funcion con el un argumento vacio para simular un dia sin ventas, salio NaN
 Causa: El total se divide con el contador y ambos son 0, falta un comprobante
 Correcion: Se usa el if que revise si el contador(cantidaValidas) es 0. Mi version lo hace en la linea 42 de analitica.js, lo pruebo en depuracion.js
+
+Dia 5 (22/11/2026)
+Predicciones:
+Funcion: totalVendido
+Mi prediccion si n x10: 10
+Razonamiento: Por cada venta se hace una visita y al ser 10 ventas seria 10 operaciones
+
+Funcion: ventaMayor
+Mi prediccion si n x10: 20
+Razonamiento: Por cada venta se hace una visita y una comparacion al ser 20 ventas seria 20 operaciones
+
+Funcion: totalPorCiudad
+Mi prediccion si n x10: 20
+Razonamiento: Por cada venta se hace una visita y una comparacion al ser 20 ventas seria 20 operaciones
+
+Funcion: primeraVenta
+Mi prediccion si n x10: 1
+Razonamiento: Porque solo toma la primera venta, por lo cual solo seria 1 operacion
+
+Resultados:
+Funcion: totalVendido
+Resultado si n x10: 10
+
+Funcion: totalVendido
+Resultado si n x10: 20
+
+Funcion: totalVendido
+Resultado si n x10: 20
+
+Funcion: totalVendido
+Resultado si n x10: 1
+
+Factor = operaciones con el n más grande ÷ operaciones con el n anterior
+
+Funcion: totalVendidoI
+
+|Paso de tamaño |Operaciones antes|Operaciones despues|Factor|
+|---------------|-----------------|-------------------|------|
+|100->1.000     |100              |1.000              |10    |
+|1.000->10.000  |1.000            |10.000             |10    |
+|10.000->100.000|10.000           |100.000            |10    |
+
+Funcion: ventaMayorI
+
+|Paso de tamaño |Operaciones antes|Operaciones despues|Factor|
+|---------------|-----------------|-------------------|------|
+|100->1.000     |200              |2.000              |10    |
+|1.000->10.000  |2.000            |20.000             |10    |
+|10.000->100.000|20.000           |200.000            |10    |
+
+Funcion: totalPorCiudadI
+
+|Paso de tamaño |Operaciones antes|Operaciones despues|Factor|
+|---------------|-----------------|-------------------|------|
+|100->1.000     |200              |2.000              |10    |
+|1.000->10.000  |2.000            |20.000             |10    |
+|10.000->100.000|20.000           |200.000            |10    |
+
+Funcion: primeraVentaI
+    
+|Paso de tamaño |Operaciones antes|Operaciones despues|Factor|
+|---------------|-----------------|-------------------|------|
+|100->1.000     |1                |1                  |1     |    
+|1.000->10.000  |1                |1                  |1     |
+|10.000->100.000|1                |1                  |1     |
+
+## Clasificacion Big O
+totalVendidoI: O(n). Codigo: un solo for...of sobre las ventas, sin ciclos anidados. Numeros: factor 10 en los tres pasos.
+ventaMayorI: O(n). Codigo: un solo ciclo. Numeros: factor 10 en los tres pasos. Hace 2n operaciones en lugar de n, pero Big O ignora la constante: el crecimiento es igual.
+totalPorCiudadI: O(n). Codigo: un solo ciclo. La busqueda en el diccionario se tomo como una operacion constante. Numeros: factor 10 en los tres pasos.
+primeraVentaI: O(1). Codigo: un acceso por índice, sin ciclo. Numeros: siempre 1 operacion, factor 1.
+
+## Cómo reconoceria un O(n²)
+Habria un ciclo sobre los datos dentro de otro ciclo sobre los datos (por ejemplo, comparar cada venta con todas las demas). Al multiplicar n por 10, las operaciones se multiplicarian por 100, y el factor de la tabla estaria cerca de 100. Ninguna de mis funciones lo es.

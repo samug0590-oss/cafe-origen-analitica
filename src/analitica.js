@@ -127,4 +127,51 @@ function ventasDelDia(ventas, fecha) {
     return delDia
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia};
+function totalVendidoI(ventas, contador) {
+    let total = 0;
+    for (const venta of ventas) {
+        total = total + valorVenta(venta)
+        contador.operaciones = contador.operaciones + 1
+    }
+    return total
+}
+
+function ventaMayorI(ventas, contador) {
+    let mayor = null;
+    for (const venta of ventas) {
+        //visita
+        contador.operaciones = contador.operaciones + 1
+        //comparacion
+        contador.operaciones = contador.operaciones + 1
+        if (mayor === null || valorVenta(venta) > valorVenta(mayor)) {
+            mayor = venta;
+        }
+    }
+    return mayor
+}
+
+function totalPorCiudadI(ventas, contador) {
+    let porCiudad = {}
+    for (const venta of ventas) {
+        //visita
+        contador.operaciones = contador.operaciones + 1
+        let clave = venta.ciudad.trim().toLowerCase()
+        //comparacion
+        contador.operaciones = contador.operaciones + 1
+        if (porCiudad[clave] === undefined) {
+            porCiudad[clave] = 0;
+        }
+        porCiudad[clave] = porCiudad[clave] + valorVenta(venta)
+    }
+    return porCiudad
+}
+
+function primerVentaI(ventas, contador) {
+    contador.operaciones = contador.operaciones + 1
+    if (ventas.length === 0) {
+        return null
+    }
+    return ventas[0]
+}
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI};
