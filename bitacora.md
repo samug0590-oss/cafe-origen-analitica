@@ -285,3 +285,52 @@ primeraVentaI: O(1). Codigo: un acceso por índice, sin ciclo. Numeros: siempre 
 
 ## Cómo reconoceria un O(n²)
 Habria un ciclo sobre los datos dentro de otro ciclo sobre los datos (por ejemplo, comparar cada venta con todas las demas). Al multiplicar n por 10, las operaciones se multiplicarian por 100, y el factor de la tabla estaria cerca de 100. Ninguna de mis funciones lo es.
+
+Dia 6 (23/11/2026)
+Cuando i = 0, j va de 1 a 4: son 4 comparaciones.
+Cuando i = 1, j va de 2 a 4: son 3 comparaciones.
+Cuando i = 2, j va de 3 a 4: son 2 comparaciones.
+cuando i = 3, j va de 4 a 4: es 1 comparacion.
+
+Generalizacion:
+comparaciones = n * (n - 1) / 2
+
+| n      | tiempo (ms) | factor vs. el anterior |
+|--------|-------------|------------------------|
+| 1.000  | 4,418ms     | -                      |
+| 2.000  | 12,573ms    | 2.8458ms               |
+| 4.000  | 43,135ms    | 3.4307ms               |
+| 8.000  | 195,354ms   | 4.5288ms               |
+| 16.000 | 790,651ms   | 4.0472ms               |
+
+Cuando n se duplica, el tiempo se multiplica por alrededor de 4.5
+Lo ideal es 4, en mis resultados varia por el ruido, varian bastante por los procesos externos a javascript
+¿Por que 4?: Porque el trabajo crece con n², y (2n)² = 4n²
+Metodo: tiempo = c x n²
+c = 790.651 / (16.000)²
+c = 3.0884
+
+16.000 a 100.000, n se multiplica por 6,25, asi que el tiempo se multiplica por 6,25² = 39,06. Si se pasa a 1.000.000, n se multiplica por 62,5 y el tiempo por 62,5² = 3.906,25:
+
+n = 100.000
+790 × 39,06 = 30.857,4ms = 30,8s
+
+n = 1.000.000
+790 × 3.906,25 = 3.085.937,5 = 51m
+
+Resultado de n = 100.000
+37,029s
+Dif = 6,229s
+Se ejecuto porque la estimacion es menor a 2minutos (120.000ms)
+
+Costo oculto de include
+include actua como un for, basicamente otro ciclo que busca lo que necesita en el arreglo completo
+El peso que tenga depende de la cantidad de clientes iguales, con datos tipicos no pesa casi ya que los clientes varian mucho, en el peor caso real requiere una distribucion de datos muy especifica de muchos clientes repetidos y uno muy frecuente que entra a la lista al final, sumando un tercer nivel de recorrido
+
+Conclusion para la gerencia
+
+El reporte de clientes recurrentes se vuelve lento porque, para saber si un cliente compro mas de una vez, el programa compara cada venta contra todas las ventas que vienen despues. Es como revisar una pila de recibos tomando cada uno y comparandolo con todos los demas.
+
+Con pocas ventas esto es rapido. Pero el trabajo no crece en proporcion: si el numero de ventas se duplica, el tiempo se multiplica por cuatro. En nuestras pruebas, 16.000 ventas tardaron 790,651 milisegundos; con el historial anual estimamos que tardaria 51 minutos.
+
+Esto no es un fallo del equipo, es la forma en que esta construido elcalculo. Se puede arreglar cambiando el metodo: en lugar de comparar cada venta con todas, el programa puede llevar una libreta con la cuenta de compras por cliente y revisar las ventas una sola vez. Con ese cambio, el reporte tardaria segundos en lugar de minutos.
