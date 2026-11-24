@@ -343,3 +343,46 @@ Dia 7 (24/11/2026)
 | Arreglos nuevos | 3 (los de map, filter y map) | 0          |
 | Tiempo          | O(n)                         | O(n)       |
 | Espacio extra   | O(n)                         | O(1)       |
+
+Porque O(4n) es O(n)
+Big O mide cuanto crece, no cuanto vale. Una funcion que hace 4n operaciones y otra que hace n crecen igual de rapido, al multiplicar n por 10 ambas se multiplican por 10.
+Se eliminan las constantes multiplicativas, el 4 no cambia la forma de la curva, solo la inclina.
+Recorrer cuatro veces una lista de 1.000 nombres son 4.000 pasos y recorrerla una vez son 1.000, la primera es mas lenta, pero si la lista pasa a 10.000 nombres, ambas pasan a ser 10 veces mas lentas
+
+| Si la funcion                                             | Espacio                              |
+|-----------------------------------------------------------|--------------------------------------|
+| Solo usa contadores, acumuladores o una variable          | O(1)                                 |
+| Crea un arreglo con tantos elementos como ventas (o casi) | O(n)                                 |
+| Crea un diccionario con una clave por grupo               | O(g), donde g es el numero de grupos |
+
+VentaMayor:
+La venta se guarda en una variable, no copia la venta guardada, guarda una referencia O(1)
+
+totalPorCiudad y unidadesPorProducto:
+Crean un diccionario, pero su tamaño depende de cuantas ciudades o productos distintos hay, no de cuantas ventas, con 4 ciudades son 4 claves, sin importar si hay 12 o 100.000 ventas
+
+topProductosPorValor:
+Crea varias cosas, el diccionario por producto, el arreglo que sale de object.entries (con un par por producto), y el resultado final de slice, todas dependen del numero de productos distintos, no de n.
+
+ventasDelDia:
+Crea un arreglo con las ventas de ese dia: O(m), donde m es el numero de ventas del dia, hasta n en el peor caso
+
+clientesRecurrentes:
+Crea el arreglo recurrentes, que guarda a cada cliente repetido una sola vez: O(r), con r hasta n/2 en el peor caso
+
+generarVentas:
+Crea n objetos: O(n), pero es esperado, porque su trabajo es producir esos datos
+
+totalVendidoM y unidadesVendidasM:
+Con solo reduce son O(1)
+
+ventasPorCiudad:
+Con reduce y filter crea un arreglo y es O(n)
+
+Las instrumentadas tienen el mismo espacio que las originales, mas un contador fijo
+
+Elijo totalCiudadCadena, pero voy a dejar a totalCiudadPasada para referencia
+Porque?
+Mayormente por su legibilidad: cada etapa dice que hace: normalizar, filtrar, calcular, sumar
+Es declarativa: describe el resultado, no los pasos
+Se modifica facil: agregar una etapa es agregar una linea
