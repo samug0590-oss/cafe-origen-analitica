@@ -334,3 +334,12 @@ El reporte de clientes recurrentes se vuelve lento porque, para saber si un clie
 Con pocas ventas esto es rapido. Pero el trabajo no crece en proporcion: si el numero de ventas se duplica, el tiempo se multiplica por cuatro. En nuestras pruebas, 16.000 ventas tardaron 790,651 milisegundos; con el historial anual estimamos que tardaria 51 minutos.
 
 Esto no es un fallo del equipo, es la forma en que esta construido elcalculo. Se puede arreglar cambiando el metodo: en lugar de comparar cada venta con todas, el programa puede llevar una libreta con la cuenta de compras por cliente y revisar las ventas una sola vez. Con ese cambio, el reporte tardaria segundos en lugar de minutos.
+
+Dia 7 (24/11/2026)
+
+| Preguntas       | Cadena                       | Una pasada |
+|-----------------|------------------------------|------------|
+| Recorridos      | 4                            | 1          |
+| Arreglos nuevos | 3 (los de map, filter y map) | 0          |
+| Tiempo          | O(n)                         | O(n)       |
+| Espacio extra   | O(n)                         | O(1)       |
