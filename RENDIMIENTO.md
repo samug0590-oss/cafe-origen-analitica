@@ -1,7 +1,7 @@
 # Rendimiento del motor de analitica - Cafe Origen v0.2
 
 ## 1. Resumen
-(Dos o tres frases: que es el motor, que se midio y la conclusion principal.)
+
 
 ## 2. Como se midio
 - Datos: ventas generadas con src/generador.js, n = 10.000.
@@ -41,10 +41,9 @@
 Limites: es una estimacion calculada a partir de las mediciones, no una garantia.
 
 ## 5. Riesgos
-(Lista ordenada de mayor a menor riesgo y el criterio usado.)
+
 
 ## 6. Plan de optimizacion
-(Funcion de mayor riesgo: que trabajo se repite, que se guardaria, resultado esperado, costo.)
+
 
 ## 7. Limitaciones
-(Que no se midio o que podria cambiar los resultados.)
