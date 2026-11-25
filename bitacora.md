@@ -386,3 +386,9 @@ Porque?
 Mayormente por su legibilidad: cada etapa dice que hace: normalizar, filtrar, calcular, sumar
 Es declarativa: describe el resultado, no los pasos
 Se modifica facil: agregar una etapa es agregar una linea
+
+Revisor: Jose Daniel Rodelo
+
+Observacion: El revisor al mirar el documento, no le salio ninguna duda, no encontra iconsistencias, o algun detalle a aclar o mejorar, en general, todas las tabalas estan bien estructuradas, todo esta bien ordenado y la informacion es clara y facil de leer.
+
+Mi respuesta: (Aceptada) Le pregunte si de verdad habia revisado todo, pregunte por algunas cosas que me explicara de lo que acabo de leer, como "¿Es claro el porque en la tabla de clasificacion de funciones algunas se miden en ms y otras en ops?", y lo respondio sin dudar, no cambie nada ya que el documento esta correcto y es facil de leer y entender para el que no ha visto el codigo.

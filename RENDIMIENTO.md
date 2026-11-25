@@ -1,13 +1,13 @@
 # Rendimiento del motor de analitica - Cafe Origen v0.2
 
 ## 1. Resumen
-
+Café Origen es un negocio de café y productos relacionados, y este proyecto es su motor de analítica de ventas. Toma el historial de ventas y genera un reporte por consola para revisar los resultados del negocio.
 
 ## 2. Como se midio
 - Datos: ventas generadas con src/generador.js, n = 10.000.
 - Operaciones: contador manual (1 por visita y 1 por comparacion).
 - Tiempo: console.time, promedio de varias repeticiones.
-- Equipo: (describe tu computador brevemente).
+- Equipo: Compumax Halcon Series.
 - Complejidad espacial: se cuenta la memoria extra que crea la funcion, sin contar los datos de entrada.
 
 ## 3. Clasificacion de las funciones
@@ -34,16 +34,64 @@
 
 ## 4. Proyeccion a 1.000.000 de ventas
 
-| Funcion | Medido con 10.000 | Factor | Estimado con 1.000.000 |
-|---------|-------------------|--------|------------------------|
-| ... | ... | ... | ... |
+| Funcion              | Medido con 10.000 | Factor | Estimado con 1.000.000 |
+|----------------------|-------------------|--------|------------------------|
+| valorVenta           | Menos de 1ms      | 1      | Menos de 1ms           |
+| totalVendido         | 10.000 ops        | 100    | 1.000.000              |
+| unidadesVendidas     | 1,065ms           | 100    | 106,5ms                |
+| ventaMayor           | 20,000 ops        | 100    | 2.000.000 ops          |
+| ticketPromedio       | 1,561ms           | 100    | 156,1ms                |
+| ventasPorCiudad      | 1,232ms           | 100    | 123,2ms                |
+| totalVendidoM        | 10.000 ops        | 100    | 1.000.000 ops          |
+| unidadesVendidasM    | 1,065ms           | 100    | 106,5ms                |
+| ventasPorCiudadM     | 1,232ms           | 100    | 123,2ms                |
+| totalPorCiudad       | 20.000 ops        | 100    | 2.000.000 ops          |
+| unidadesPorProducto  | 2,721ms           | 100    | 272,1ms                |
+| topProductosPorValor | 2,505ms           | 100    | 250,5ms                |
+| ventasDelDia         | 1,139ms           | 100    | 113,9ms                |
+| clientesRecurrentes  | 407,202ms         | 10.000 | 40,7202s               |
+| totalCiudadCadena    | 3,138ms           | 100    | 313,8ms                |
+| totalCiudadUnaPasada | 1,556ms           | 100    | 155,6ms                |
+| primerVenta          | 1 op              | 1      | 1 op                   |
 
-Limites: es una estimacion calculada a partir de las mediciones, no una garantia.
+Es una estimacion calculada a partir de las mediciones, no una garantia.
 
 ## 5. Riesgos
+Nivel: Alto
+-clientesRecurrentes
+Por que:
+O(n²) en tiempo; ya "se quedo pensando" en la historia del Minireto 6
 
+Nivel: Medio
+-totalCiudadCadena
+-ventasPorCiudadM
+-ventasDelDia
+Por que:
+O(n) en tiempo pero con memoria O(n): crean arreglos grandes
+
+Nivel: Medio-bajo
+-topProductosPorValor
+-totalPorCiudad
+-unidadesPorProducto
+Por que:
+O(n) en tiempo; memoria proporcional a los grupos, no a las ventas; el sort sube un poco el costo
+
+Nivel: Bajo
+-El resto de funciones con O(1) de memoria
+Por que:
+Crecen en proporcion y no consumen memoria extra
+
+Nivel: Ninguno
+-valorVenta
+-primerVenta
+Por que:
+O(1)
 
 ## 6. Plan de optimizacion
-
+Problema: clientesRecurrentes repite las comparaciones sobre las ventas muchas veces O(n²)
+Idea: Se almacenaria una libre (un diccionario) con la cuenta de compras por cliente, se recorren las ventas 1 sola vez, anotando cuantas veces aparece cada cliente. Al final los recurrentes son los que tinen cuenta mayor a 1
+Resultado esperado: El tiempo pasaria de 0(n²) a 0(n)
+Costo: Se usa memoria extra proporcional a los clientes distintos, O(c) a cambio de tiempo
+Aclaracion: Esta seccion es un plan, la implementacion es del MiniReto 9
 
 ## 7. Limitaciones
