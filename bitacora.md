@@ -392,3 +392,14 @@ Revisor: Jose Daniel Rodelo
 Observacion: El revisor al mirar el documento, no le salio ninguna duda, no encontra iconsistencias, o algun detalle a aclar o mejorar, en general, todas las tabalas estan bien estructuradas, todo esta bien ordenado y la informacion es clara y facil de leer.
 
 Mi respuesta: (Aceptada) Le pregunte si de verdad habia revisado todo, pregunte por algunas cosas que me explicara de lo que acabo de leer, como "¿Es claro el porque en la tabla de clasificacion de funciones algunas se miden en ms y otras en ops?", y lo respondio sin dudar, no cambie nada ya que el documento esta correcto y es facil de leer y entender para el que no ha visto el codigo.
+
+Dia 8 (25/11/2026)
+Entender:
+Recibe el arreglo de las ventas (ventas) por ejemplo el ya establecido (datos.js) o el nuevo generado por generarVentas.
+Devuelve los clientes recurrentes, osea los clientes con mas de una compra
+Las restricciones es que debe de demorar menos de 1s con 100.000 ventas, usando Set y Map, sin alterar los datos originales.
+
+Ejemplos (incluyendo casos borde):
+-En una muestra normal(con clientes que se repiten y que no) Devuelve correctamente los cientes recurrentes (que han comprado mas de 1 vez) en 407,202ms
+-Un solo elemento ([ventas[0]]) No hay clientes recurrentes, ninguno compro mas de una vez, demoro 4,417ms
+-Arreglo vacio ([]) No hay clientes recurrentes, ninguno compro mas de una vez, demoro 0.138ms

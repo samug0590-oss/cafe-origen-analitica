@@ -1,0 +1,1239 @@
+Necesito que me enseñes a hacer los trabajos que tengo en mi estudio, te voy a mandar la guia y me explicaras paso a paso lo que tengo que hacer, no me hagas el codigo, yo tengo que hacerlo, tu funcion es enseñarme para que funciona cada cosa, sea con ejemplos, etc, y explicarme como debo de hacer todo paso a paso para poder terminar el trabajo correctamente, este es el primer minireto: 1Primer tueste: el repositorio y los datos
+Configurar el proyecto, representar el historial de ventas como un arreglo de objetos y explorarlo para identificar su estructura y sus casos borde.
+Contexto
+
+Café Origen exportó una muestra de su historial de ventas. Antes de calcular cualquier cosa, tu líder técnico te pide entender los datos como lo haría un analista: qué representa cada registro, qué tipos de datos tiene y qué problemas trae. “Los errores de un reporte casi nunca están en la fórmula; están en los datos que nadie miró”, te dice. Esta es la muestra:
+
+id
+
+fecha
+
+cliente
+
+producto
+
+ciudad
+
+cantidad
+
+precio
+
+1
+
+2026-09-01
+
+C01
+
+Origen Huila 500 g
+
+Medellín
+
+2
+
+42000
+
+2
+
+2026-09-01
+
+C02
+
+Origen Nariño 250 g
+
+Bogotá
+
+1
+
+26000
+
+3
+
+2026-09-02
+
+C03
+
+Prensa francesa
+
+Cali
+
+1
+
+95000
+
+4
+
+2026-09-02
+
+C01
+
+Origen Huila 500 g
+
+Medellín
+
+1
+
+42000
+
+5
+
+2026-09-03
+
+C04
+
+Origen Sierra 500 g
+
+medellín
+
+3
+
+45000
+
+6
+
+2026-09-03
+
+C05
+
+Origen Nariño 250 g
+
+Bogotá
+
+2
+
+26000
+
+7
+
+2026-09-04
+
+C02
+
+Molino manual
+
+Bogotá
+
+1
+
+120000
+
+8
+
+2026-09-04
+
+C06
+
+Origen Huila 500 g
+
+Cali
+
+0
+
+42000
+
+9
+
+2026-09-05
+
+C03
+
+Origen Sierra 500 g
+
+Cali
+
+2
+
+45000
+
+10
+
+2026-09-05
+
+C07
+
+Origen Huila 500 g
+
+Pereira
+
+4
+
+42000
+
+11
+
+2026-09-06
+
+C01
+
+Prensa francesa
+
+Medellín
+
+1
+
+95000
+
+12
+
+2026-09-06
+
+C08
+
+Origen Nariño 250 g
+
+Bogotá
+
+3
+
+26000
+Objetivo
+
+Configurar el proyecto, representar el historial de ventas como un arreglo de objetos y explorarlo para identificar su estructura y sus casos borde.
+PASOS
+Instrucciones
+
+    Crea una carpeta local cafe-origen-analitica, inicializa Git y conéctala con un repositorio público de GitHub con el mismo nombre.
+    Crea la estructura inicial: la carpeta src/ con los archivos datos.js y analitica.js, y en la raíz los archivos bitacora.md y README.md.
+    En datos.js, representa las 12 ventas de la tabla como un arreglo de objetos llamado ventas y expórtalo con module.exports. Respeta los datos tal como vienen, incluidos sus errores: la limpieza será una decisión tuya, no un accidente.
+    Crea un archivo src/explorar.js que importe las ventas y muestre: la cantidad de registros, el primer y el último registro, la propiedad producto del registro en la posición 4 y la tabla completa con console.table.
+    Revisa la tabla con atención y registra en la bitácora, en una sección “Diccionario de datos”, cada propiedad con su tipo y su significado.
+    En una sección “Casos borde detectados”, identifica al menos tres problemas de calidad en los datos (pista: revisa ciudades, cantidades y clientes) y escribe qué decisión tomarás con cada uno.
+    Haz tu primer commit con un mensaje descriptivo y súbelo a GitHub.
+
+REQ.
+Requisitos técnicos
+
+    Node.js (versión LTS), VS Code y la terminal integrada.
+    Git (init, add, commit, remote, push) y GitHub.
+    Arreglos y objetos; acceso por índice; length; module.exports y require; console.table.
+
+CHECK
+Criterios de cumplimiento
+
+    El repositorio es público y contiene src/datos.js, src/analitica.js, src/explorar.js, bitacora.md y README.md.
+    node src/explorar.js se ejecuta sin errores y muestra la cantidad de registros, el primero, el último y la tabla completa.
+    Los 12 registros están en el arreglo con los mismos valores de la muestra.
+    La bitácora contiene el diccionario de datos y al menos tres casos borde con su decisión.
+    GitHub muestra al menos un commit con un mensaje que describe el cambio.
+
+📦 Entregable
+
+Enlace del repositorio con el arreglo de ventas, el script de exploración y la bitácora con el diccionario de datos y los casos borde.
+
+Guía paso a paso: Primer tueste
+
+Vamos por partes. Para cada paso te explico qué es, para qué sirve y cómo hacerlo, sin darte el código final. Ya has trabajado con HTML, CSS y Tailwind, pero este reto es distinto: ahora entras a JavaScript con Node.js, Git y GitHub trabajando como un flujo de proyecto real.
+
+Antes de empezar: verifica tus herramientas
+
+Abre la terminal integrada de VS Code (Ctrl + ñ o menú Terminal → New Terminal) y ejecuta:
+
+node --version → debe mostrar un número de versión (la LTS actual)
+git --version → debe mostrar una versión de Git
+
+Si alguno falla, instálalo desde nodejs.org o git-scm.com y reinicia VS Code.
+
+¿Por qué Node? JavaScript normalmente corre en el navegador. Node.js te permite ejecutarlo directamente en tu computador, desde la terminal, sin HTML. Ideal para procesar datos.
+
+Paso 1: Carpeta, Git y GitHub
+
+Qué es Git: un sistema que guarda "fotos" (commits) de tu proyecto a lo largo del tiempo. GitHub es el sitio web donde se guarda una copia en la nube.
+
+Qué debes hacer:
+
+Crear la carpeta cafe-origen-analitica (puedes usar mkdir en terminal o hacerlo desde el explorador) y abrirla en VS Code.
+Inicializar Git dentro de ella. El comando que buscas es git init. Crea una carpeta oculta .git que es donde Git guarda el historial.
+En GitHub, crear un repositorio público con el mismo nombre exacto. Importante: no marques la opción de agregar README ni .gitignore, porque los vas a crear tú localmente y se generarían conflictos.
+Conectar tu carpeta local con el repositorio remoto. Investiga git remote add origin <url>. La palabra origin es solo el apodo del remoto; la URL te la muestra GitHub al crear el repositorio.
+
+Cómo verificar: git remote -v debe mostrarte la URL de tu repo.
+
+Paso 2: Estructura inicial
+
+Debes terminar con esto:
+
+cafe-origen-analitica/
+├── src/
+│   ├── datos.js
+│   └── analitica.js
+├── bitacora.md
+└── README.md
+
+Para qué sirve cada cosa:
+
+datos.js: guarda los datos.
+analitica.js: aquí irán los cálculos en retos futuros (por ahora puede quedar vacío).
+explorar.js: lo crearás en el paso 4.
+bitacora.md: tu cuaderno de decisiones. Markdown es el mismo formato del README.
+README.md: la portada del proyecto. Escribe al menos qué es el proyecto y cómo ejecutarlo.
+
+Un detalle: Git no guarda carpetas vacías, solo archivos. Por eso analitica.js vacío igual cuenta, porque es un archivo, pero conviene ponerle un comentario de una línea (// Aquí irán los cálculos) para que quede claro su propósito.
+
+Paso 3: El arreglo de objetos en datos.js
+
+Este es el corazón del reto. Primero entiende dos conceptos.
+
+Objeto
+
+Agrupa información de una sola cosa con pares clave: valor:
+
+js
+const persona = { nombre: "Ana", edad: 30 };
+
+Se accede con punto: persona.nombre.
+
+Arreglo
+
+Una lista ordenada de elementos, entre corchetes. Cada posición tiene un índice que empieza en 0:
+
+js
+const frutas = ["manzana", "pera", "uva"];
+// frutas[0] es "manzana", frutas[2] es "uva"
+Arreglo de objetos
+
+Combina ambos: una lista donde cada elemento es un objeto. Una tabla se representa así: cada fila es un objeto, cada columna es una propiedad.
+
+js
+const mascotas = [
+  { id: 1, nombre: "Luna", especie: "gato" },
+  { id: 2, nombre: "Rocky", especie: "perro" }
+];
+
+Tu tarea: convertir las 12 filas de la tabla en 12 objetos, con las propiedades id, fecha, cliente, producto, ciudad, cantidad y precio.
+
+Decisiones de tipos que debes pensar tú:
+
+¿id, cantidad y precio son números o texto? (Pista: ¿vas a querer sumarlos después?)
+¿fecha, cliente, producto y ciudad son números o texto? Los textos van entre comillas.
+¿Cómo escribirías el precio: 42000 o "42.000"? (Pista: JavaScript no entiende puntos de miles en números.)
+
+Regla de oro del reto: copia los datos tal cual vienen, incluso lo que parezca un error (medellín en minúscula, cantidad 0...). Esos errores son el material del paso 6.
+
+Exportar: module.exports y require
+
+En Node, cada archivo es un módulo aislado. Para usar algo de otro archivo, el archivo que lo tiene debe exportarlo y el que lo necesita debe importarlo:
+
+Al final de datos.js usas module.exports = ... para "publicar" tu arreglo.
+En el otro archivo usas require("./ruta") para recibirlo.
+
+Ejemplo de la idea con otro contexto:
+
+js
+// matematicas.js
+const pi = 3.14159;
+module.exports = pi;
+
+// otro.js
+const pi = require("./matematicas");
+
+Fíjate en el ./: indica "en esta misma carpeta". Piensa qué ruta necesitarás desde explorar.js.
+
+Cómo verificar: cuenta que tengas 12 objetos y compara cada valor con la tabla. Un error de dedo aquí te complica los pasos siguientes.
+
+Paso 4: src/explorar.js
+
+Este script no modifica nada, solo mira los datos. Debe mostrar cinco cosas:
+
+Qué mostrar	Concepto que necesitas
+Cantidad de registros	.length de un arreglo
+Primer registro	índice [0]
+Último registro	índice [longitud - 1]
+producto del registro en la posición 4	arreglo[4].producto
+Tabla completa	console.table(...)
+
+Conceptos clave:
+
+.length te da cuántos elementos tiene el arreglo. Si tiene 12, .length es 12, pero el último índice es 11. Eso es lo que te permite calcular el último elemento sin contar a mano.
+console.log(...) imprime en la terminal. Úsalo con etiquetas (por ejemplo, un texto que diga qué estás mostrando) para que la salida sea legible.
+console.table(...) recibe un arreglo de objetos y lo dibuja como tabla. Pruébalo y compárala con la tabla original.
+
+Ojo con "la posición 4": es el índice 4, lo que en la tabla sería el registro con id 5, porque los índices empiezan en 0. Verifica que tu resultado sea el producto de ese registro. Esta confusión es muy común y es justo lo que el reto quiere que notes.
+
+Para ejecutarlo: desde la raíz del proyecto, node src/explorar.js. Si te sale un error de "Cannot find module", revisa la ruta del require.
+
+Paso 5: Diccionario de datos en bitacora.md
+
+Un diccionario de datos documenta cada propiedad: su nombre, su tipo y qué significa. Es lo primero que haría un analista. Debes crear una sección con encabezado (## Diccionario de datos) y una tabla o lista.
+
+Para cada una de las 7 propiedades responde:
+
+Nombre (tal como está en el código)
+Tipo (number, string...). Puedes comprobarlo con typeof en tu script si dudas.
+Significado en lenguaje de negocio. Ejemplo de la idea: no escribas solo "precio", escribe qué representa exactamente. Pregúntate: ¿es el precio de una unidad o el total de la venta? Eso afectará cálculos futuros, así que justifica tu interpretación.
+
+Una tabla en Markdown se ve así:
+
+| Propiedad | Tipo | Significado |
+|-----------|------|-------------|
+| ...       | ...  | ...         |
+Paso 6: Casos borde detectados
+
+Un caso borde es un dato que existe pero que puede romper o distorsionar un cálculo. Te dan la pista: revisa ciudades, cantidades y clientes.
+
+Cómo cazarlos, columna por columna:
+
+Ciudad: lee los valores uno por uno. Si dos textos parecen iguales a simple vista, ¿lo son para JavaScript? ("Cali" === "cali" da false.) Piensa qué pasaría si agrupas ventas por ciudad.
+Cantidad: busca valores que no tengan sentido en una venta. ¿Qué significa vender 0 unidades? ¿Cuenta como venta?
+Cliente: mira qué clientes se repiten y cuáles no. Piensa si eso es un error o un comportamiento normal, y qué información te aporta.
+
+También puedes mirar otras columnas por tu cuenta (producto/precio: ¿cada producto siempre tiene el mismo precio?). Encontrar más de tres suma valor.
+
+Lo importante es la decisión. Para cada caso escribe:
+
+El problema (con el id del registro afectado)
+Por qué es un problema (qué cálculo dañaría)
+Tu decisión (corregirlo, excluirlo, dejarlo y por qué)
+
+Una decisión sin justificación no sirve: "lo borro" es débil; "lo excluyo de ingresos porque no representa una venta real, pero lo conservo en el archivo original para trazabilidad" es una decisión de analista.
+
+Paso 7: Primer commit y push
+
+Git trabaja en tres etapas, y entenderlas evita confusión:
+
+Working directory: tus archivos tal como están.
+Staging (git add): eliges qué cambios entran en la próxima foto.
+Commit (git commit -m "..."): tomas la foto y le pones un mensaje.
+Push (git push): subes los commits a GitHub.
+
+Secuencia a investigar: git add → git commit -m → git push.
+
+Detalles que suelen causar errores:
+
+En el primer push probablemente necesites git push -u origin main. La -u enlaza tu rama local con la remota para futuros pushes. Si tu rama local se llama master, revisa con git branch y ajusta (o renómbrala con git branch -M main).
+Si Git te pide identificarte, configura user.name y user.email con git config.
+Mensaje descriptivo: debe decir qué cambió. Compara "cambios" (malo) con algo que explique que agregaste la estructura inicial, los datos y la bitácora (bueno).
+
+Verificación final: entra a tu repo en GitHub y confirma que ves src/, bitacora.md, README.md y el commit.
+
+Lista de comprobación antes de entregar
+[ ] Repo público con el nombre cafe-origen-analitica
+[ ] src/datos.js, src/analitica.js, src/explorar.js, bitacora.md, README.md
+[ ] 12 registros idénticos a la muestra (incluidos los errores)
+[ ] node src/explorar.js corre sin errores y muestra las 5 cosas
+[ ] Diccionario con las 7 propiedades
+[ ] Mínimo 3 casos borde con su decisión
+[ ] Commit con mensaje claro visible en GitHub
+Cómo seguimos
+
+Hazlo paso a paso y, cuando tengas algo escrito (o un error), pégamelo aquí y lo revisamos juntos: te señalo qué está bien, qué falla y por qué, sin reescribirlo por ti. Si algo de esta guía no te quedó claro, dime en qué paso y lo explico con otro ejemplo.
+
+¿Empezamos con el paso 1? Cuéntame si node --version y git --version te funcionaron.
+
+Ya hice todo, todo me funciono, ya escribi todo en la bitacora, necesito seguir con el siguiente minireto:
+Contexto
+
+La gerente de Café Origen quiere un tablero mínimo para la reunión del lunes: cuánto se vendió en total, cuántas unidades salieron, cuál fue la venta más grande y cuánto gasta en promedio un cliente por compra (el ticket promedio). Tu líder técnico pone una condición: “Primero con ciclos. Quiero ver que entiendes cada paso antes de usar atajos”.
+Objetivo
+
+Calcular indicadores básicos de negocio con ciclos manuales, aplicando los patrones contador, acumulador y máximo, y manejando los casos borde de forma explícita.
+PASOS
+Instrucciones
+
+Antes de programar, escribe en la bitácora el plan en pseudocódigo de cada indicador: qué recorres, qué condición aplicas, qué acumulas y con qué valor inicias.
+En analitica.js, crea la función valorVenta(venta) que devuelve cantidad × precio. Todas las demás funciones la usarán.
+Crea con ciclos for...of las funciones totalVendido(ventas), unidadesVendidas(ventas) y ventaMayor(ventas). La última devuelve el registro completo, no solo el valor.
+Crea ticketPromedio(ventas): el valor total dividido entre la cantidad de ventas válidas (las que tienen cantidad mayor que 0).
+Crea ventasPorCiudad(ventas, ciudad) que devuelve el total vendido en una ciudad. Haz que la comparación ignore mayúsculas y espacios sobrantes.
+Prueba cada función con tres entradas: el arreglo completo, un arreglo de un solo elemento y un arreglo vacío. Decide y documenta qué debe devolver cada función con el arreglo vacío (por ejemplo, ventaMayor([]) no puede devolver un registro).
+Verifica a mano al menos dos resultados con una tabla de traza en la bitácora y comprueba que coinciden con los del programa. Haz commit y push.
+
+REQ.
+Requisitos técnicos
+
+Funciones con parámetros y retorno; for...of; condicionales.
+Patrones contador, acumulador y máximo; normalización con trim() y toLowerCase().
+module.exports con varias funciones.
+
+CHECK
+Criterios de cumplimiento
+
+Las seis funciones existen, reciben el arreglo como parámetro y no usan variables globales.
+totalVendido devuelve 985.000 con la muestra completa y ventasPorCiudad(ventas, "Medellín") incluye la venta escrita como “medellín ”.
+Ninguna función falla ni devuelve NaN con el arreglo vacío; el comportamiento elegido está documentado.
+La bitácora contiene el pseudocódigo de cada indicador y al menos dos trazas manuales.
+No se usan map, filter ni reduce en este reto.
+
+📦 Entregable
+
+src/analitica.js con los indicadores básicos implementados con ciclos y la bitácora con planes, trazas y decisiones de casos borde.
+🔗 Conexión con el siguiente reto:
+
+En el MiniReto 3 reescribirás estas funciones con métodos de arreglo y construirás rankings y agrupaciones.
+
+Guía paso a paso: Minireto 2
+
+Me alegra que el primero haya salido bien. Este reto es el primero de lógica de programación: vas a escribir funciones que recorren los datos y calculan cosas. Lo más valioso de aquí son los tres patrones (contador, acumulador, máximo), porque los vas a usar toda tu carrera.
+
+Antes de programar: los tres patrones
+
+Todos siguen la misma receta: recorres los datos, aplicas una condición y actualizas una variable que arrancó con un valor inicial. Lo único que cambia es qué guardas.
+
+1. Contador: "¿cuántos hay?"
+
+Una variable que arranca en 0 y sube de 1 en 1 cada vez que algo cumple una condición.
+
+js
+// ¿Cuántos números son pares?
+let pares = 0;
+for (const n of [3, 8, 10, 7]) {
+  if (n % 2 === 0) {
+    pares = pares + 1;
+  }
+}
+// pares vale 2
+2. Acumulador: "¿cuánto suman?"
+
+Una variable que arranca en 0 y le vas sumando algo en cada vuelta.
+
+js
+let suma = 0;
+for (const n of [3, 8, 10, 7]) {
+  suma = suma + n;
+}
+// suma vale 28
+3. Máximo: "¿cuál es el mayor?"
+
+Guardas el mejor candidato hasta ahora y lo reemplazas cuando aparece uno mejor. Aquí está la parte delicada: ¿con qué valor inicias?
+
+js
+let mayor = null;            // todavía no hay candidato
+for (const n of [3, 8, 10, 7]) {
+  if (mayor === null || n > mayor) {
+    mayor = n;
+  }
+}
+
+Fíjate en la condición doble: si todavía no hay candidato (null), el primer elemento se convierte en candidato automáticamente. Si iniciaras mayor en 0, funcionaría con números positivos pero fallaría con negativos. Y si iniciaras en 0 para guardar un registro completo (objeto), no tendría sentido. Por eso null es la inicialización honesta: "aún no hay ninguno".
+
+El ciclo for...of
+
+Recorre un arreglo elemento por elemento, sin que manejes índices:
+
+js
+for (const venta of ventas) {
+  // aquí "venta" es un elemento distinto en cada vuelta
+}
+
+Se lee: "para cada venta dentro de ventas". Usas const porque dentro de cada vuelta la variable no se reasigna.
+
+Paso 1: Pseudocódigo en la bitácora (hazlo primero)
+
+El pseudocódigo es escribir el algoritmo en español, con pasos claros, sin sintaxis de JavaScript. Su propósito es que pienses la lógica antes de pelear con comas y llaves.
+
+Para cada indicador, tu plan debe responder las cuatro preguntas que te dan:
+
+¿Qué recorro?
+¿Qué condición aplico? (puede ser "ninguna")
+¿Qué acumulo o cuento?
+¿Con qué valor inicio?
+
+Ejemplo de formato, con un indicador que no es de tu reto (cuántas ventas hay de Cali):
+
+Indicador: contar ventas de Cali
+- Inicio: contador = 0
+- Recorro: cada venta del arreglo
+- Condición: si la ciudad de la venta es "Cali"
+- Acción: sumo 1 al contador
+- Al terminar: devuelvo el contador
+
+Debes hacer uno así para cada indicador: valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio y ventasPorCiudad. En ventaMayor y ticketPromedio piensa especialmente en qué pasa si el arreglo viene vacío; lo vemos en el paso 6.
+
+Paso 2: valorVenta(venta)
+
+Una función es un bloque con nombre que recibe datos (parámetros), hace algo y devuelve un resultado con return:
+
+js
+function areaRectangulo(base, altura) {
+  return base * altura;
+}
+areaRectangulo(3, 4); // 12
+
+Tu función recibe un objeto venta (no el arreglo) y devuelve el producto de dos de sus propiedades. Recuerda cómo se accede a una propiedad: venta.cantidad.
+
+Por qué es la base de todo: si mañana el negocio cambia la fórmula del valor (por ejemplo, agrega un descuento), la cambias en un solo lugar y todas las demás funciones se actualizan. Eso se llama no repetir código.
+
+Paso 3: totalVendido, unidadesVendidas y ventaMayor
+
+Los tres reciben el arreglo completo como parámetro y usan for...of.
+
+totalVendido(ventas): patrón acumulador. Cada vuelta suma el valor de una venta. No calcules cantidad * precio aquí; llama a valorVenta, como pide el reto. Llamar una función es escribir su nombre con el dato entre paréntesis.
+
+unidadesVendidas(ventas): también acumulador, pero acumulas otra cosa. Piensa: ¿qué propiedad sumas ahora?
+
+ventaMayor(ventas): patrón máximo. Dos detalles clave:
+
+Compara valores (usa valorVenta para ambos lados de la comparación), pero guarda el registro completo, no el número. Necesitas, por tanto, una variable para el candidato (null al inicio).
+Si el arreglo está vacío, el ciclo no da ninguna vuelta y devuelves lo que tenía el candidato inicial. Ya tienes parte de la respuesta del paso 6.
+Paso 4: ticketPromedio(ventas)
+
+El ticket promedio es: total ÷ cantidad de ventas. Aquí usas dos patrones a la vez en el mismo ciclo: acumulador (para el total) y contador (para cuántas ventas).
+
+El reto añade una condición: solo cuentan las ventas válidas (cantidad > 0). Esto conecta directo con el caso borde de la venta 8 que ya detectaste en el reto anterior. Piensa:
+
+¿La condición if (venta.cantidad > 0) envuelve solo el contador, solo el acumulador o ambos? (Pista: si la venta 8 vale 0 × 42000 = 0, ¿cambia el total si la incluyes? ¿Y el contador?) Entender por qué importa el contador es el punto del ejercicio.
+Peligro: división entre cero. Si no hay ventas válidas, total / 0 en JavaScript da Infinity o NaN, no un error. El criterio de aceptación dice que no puede devolver NaN. Necesitas una condición antes de dividir.
+Paso 5: ventasPorCiudad(ventas, ciudad)
+
+Esta función recibe dos parámetros: el arreglo y el texto de la ciudad que buscas. Es un acumulador con condición.
+
+El reto central es normalizar: convertir los textos a una forma estándar antes de compararlos. Dos métodos de texto lo resuelven:
+
+.trim() quita espacios al inicio y al final: "  Cali ".trim() → "Cali"
+.toLowerCase() pasa todo a minúsculas: "CALI".toLowerCase() → "cali"
+
+Se pueden encadenar: texto.trim().toLowerCase().
+
+La idea: normaliza ambos lados de la comparación, la ciudad de la venta y la ciudad que te pasan como parámetro. Si solo normalizas uno, buscar "Medellín" no coincidirá con "medellín ".
+
+Ojo con el caso exacto que te piden verificar: la venta 5 tiene la ciudad escrita distinto a las demás ventas de Medellín. Tu función debe incluirla.
+
+Esta es la solución real al caso borde de las ciudades que documentaste: no modificas los datos originales, normalizas al momento de comparar.
+
+Paso 6: Probar con tres entradas
+
+Para cada función haz tres pruebas, que son la forma de pensar de un tester profesional:
+
+Entrada	Por qué
+Arreglo completo (12 ventas)	El caso normal
+Arreglo de un solo elemento	Verifica que el ciclo y el máximo funcionan con una sola vuelta
+Arreglo vacío []	El caso borde clásico: el ciclo no da ninguna vuelta
+
+Cómo probar: puedes escribir las pruebas en explorar.js o crear un archivo nuevo como src/probar.js (no está prohibido y es más ordenado). Importas las funciones con require y las llamas con console.log.
+
+Para sacar un arreglo de un solo elemento sin escribirlo a mano, recuerda que ventas[0] es un registro; envuélvelo en corchetes: [ventas[0]]. Para el vacío simplemente [].
+
+Decide qué devuelve cada función con []
+
+Esta es tu decisión de diseño y debes justificarla en la bitácora. Piensa en cada una:
+
+totalVendido([]), unidadesVendidas([]): ¿cuánto se vendió si no hubo ventas? Esto puede ser un valor natural.
+ventaMayor([]): el enunciado ya te dice que no puede devolver un registro. ¿Qué valor de JavaScript representa "no hay nada"? Hay varias opciones (null, undefined...), elige una y justifica.
+ticketPromedio([]): ¿0 o null? Piensa la diferencia: "el ticket promedio es 0" afirma algo falso (que los clientes gastaron cero), mientras que "no hay dato" es más honesto. Defiende tu elección.
+ventasPorCiudad([], "Cali"): parecido al total.
+
+Lo que evalúan no es cuál elegiste, sino que sea consistente, no devuelva NaN y esté documentado.
+
+Paso 7: Trazas manuales
+
+Una traza es simular tú mismo, como si fueras el computador, lo que hace el ciclo, anotando el valor de cada variable en cada vuelta. Sirve para comprobar que tu lógica es correcta sin confiar ciegamente en el programa.
+
+Formato de ejemplo con otro problema (sumar precios de los 3 primeros productos: 10, 20, 5):
+
+Vuelta	Elemento	Acumulador antes	Operación	Acumulador después
+inicio				0
+1	10	0	0 + 10	10
+2	20	10	10 + 20	30
+3	5	30	30 + 5	35
+
+Qué debes trazar: al menos dos de tus indicadores. Te sugiero:
+
+ventaMayor, porque tiene el patrón más delicado (¿cuándo cambia el candidato?).
+ventasPorCiudad(ventas, "Medellín"), porque muestra cómo la normalización incluye la venta 5.
+
+Para ventaMayor, la tabla debe tener una columna con el valor de cada venta y otra con el candidato actual. Haz el cálculo a mano de las 12 ventas. Al final compara tu resultado con el del programa; si no coinciden, hay un error en alguno de los dos y encontrarlo es el aprendizaje.
+
+Criterios que suelen fallar (revísalos)
+"No usan variables globales": todas las variables (let total = 0) se declaran dentro de cada función, no afuera. Si declaras let total = 0 arriba del archivo, está mal.
+module.exports con varias funciones: en el reto anterior exportaste un solo arreglo. Ahora exportas varias cosas, y se hace con un objeto: module.exports = { funcionA, funcionB }. Al importar, puedes extraer lo que necesites así: const { funcionA } = require("./archivo"). Eso se llama desestructuración.
+Prohibido map, filter, reduce: quedan para el siguiente reto, así que aquí solo for...of.
+Referencia de control: el criterio dice que totalVendido con la muestra completa debe dar 985.000. Si te da otro número, revisa que copiaste bien los datos y que la fórmula use cantidad × precio. Usa esto como tu primera señal de que algo está bien o mal.
+Orden de trabajo sugerido
+Pseudocódigo en la bitácora (los 6 indicadores)
+valorVenta → pruébala con una sola venta
+totalVendido → verifica los 985.000
+unidadesVendidas
+ventaMayor
+ticketPromedio
+ventasPorCiudad
+Pruebas con las tres entradas + decisiones del arreglo vacío en la bitácora
+Trazas manuales
+Commit y push (con un mensaje que describa qué agregaste)
+
+Mi recomendación: no escribas todo de una vez. Haz una función, pruébala, y recién entonces pasa a la siguiente. Cuando algo no te funcione o quieras que revise tu pseudocódigo o una función, pégamelo aquí y lo analizamos juntos.
+
+¿Empezamos por el pseudocódigo? Escribe el de totalVendido y ventaMayor y te digo qué ajustar.
+
+A que se refiere con ticketPromedio?
+
+Un ticket promedio es cuánto gasta, en promedio, un cliente cada vez que compra. Es un término muy usado en comercio: cada venta (cada "ticket" o recibo) tiene un valor, y el ticket promedio es el valor típico de una compra.
+
+La fórmula
+
+ticket promedio = valor total vendido ÷ número de ventas
+
+Ejemplo con otro negocio (una panadería con 3 ventas del día):
+
+Venta	Valor
+1	10.000
+2	20.000
+3	30.000
+Total vendido: 60.000
+Número de ventas: 3
+Ticket promedio: 60.000 ÷ 3 = 20.000
+
+Se lee: "en promedio, cada compra fue de 20.000".
+
+Por qué le sirve a la gerente: responde "¿cuánto gasta un cliente por compra?". Si el ticket promedio sube, los clientes están comprando más (o productos más caros) en cada visita.
+
+Ojo con lo que NO es:
+
+No es el total vendido (eso es la suma de todo).
+No es lo que gasta un cliente en total a lo largo del tiempo. Es por compra, no por cliente. Fíjate que C01 aparece en tres ventas; cada una cuenta como una compra distinta.
+
+La parte especial de tu reto
+
+El enunciado dice que se divide entre las ventas válidas (cantidad mayor que 0). Piensa en la venta 8, que tiene cantidad 0: no es una compra real. Si la contaras, tendrías un "ticket" de valor 0 que bajaría el promedio injustamente, porque estarías dividiendo entre una venta que en realidad no ocurrió.
+
+Por eso el divisor no es simplemente ventas.length, sino un contador que solo sube con las ventas que cumplen la condición.
+
+¿Quieres intentar escribir el pseudocódigo de ticketPromedio con las cuatro preguntas (qué recorro, qué condición, qué acumulo, con qué inicio)? Si lo pegas aquí, lo revisamos.
+
+function valorVenta(venta) {
+    return ventas.cantidad * ventas.precio;
+}
+
+console.log(valorVenta(ventas.cantidad, ventas.precio));
+Al correr esta funcion me dice NaN porque?
+
+Hay dos errores, y los dos tienen la misma raíz: confundir venta (una sola venta) con ventas (el arreglo completo).
+
+Error 1: dentro de la función
+
+js
+return ventas.cantidad * ventas.precio;
+
+El parámetro de tu función se llama venta (singular), pero dentro usas ventas (plural). Ese ventas es el arreglo completo de los 12 registros (o ni siquiera existe en ese archivo, según lo que hayas importado). Un arreglo no tiene una propiedad cantidad ni precio, así que ventas.cantidad es undefined.
+
+Error 2: al llamar la función
+
+js
+valorVenta(ventas.cantidad, ventas.precio)
+
+Tu función recibe un solo parámetro: un objeto venta completo. Aquí le estás pasando dos valores sueltos, y además son undefined por la misma razón de arriba (el arreglo no tiene .cantidad). La función ni siquiera usa esos dos parámetros, porque solo declaras venta.
+
+Por qué da NaN
+
+undefined * undefined en JavaScript da NaN ("Not a Number"). Es la señal clásica de que una de las propiedades que estás multiplicando no existe. Cuando veas NaN, la primera pregunta debe ser: ¿de dónde salió ese undefined?
+
+Cómo pensarlo
+
+ventas = la lista completa (el arreglo).
+ventas[0] = un registro de esa lista (un objeto).
+venta = el nombre que le das a ese objeto dentro de la función.
+
+Entonces:
+
+Dentro de la función, usa el nombre del parámetro (venta), no el del arreglo.
+Al llamarla, pásale un objeto, que obtienes por índice del arreglo.
+
+Un ejemplo con otro contexto para que veas el patrón:
+
+js
+function areaCirculo(circulo) {
+  return circulo.radio * circulo.radio * 3.14;
+}
+
+const circulos = [{ radio: 2 }, { radio: 5 }];
+console.log(areaCirculo(circulos[0])); // se le pasa UN círculo
+
+Corrige esos dos puntos y debería darte 84000 con la primera venta (2 × 42000). Si no, pégame cómo quedó y lo revisamos.
+
+let totalVentas = 0;
+for (const n of ventas) {
+    if (ventas.cantidad > 0 && ventas.precio > 0) {
+        valorVenta(ventas[n]) = totalVentas;
+        console.log(totalVentas);
+    }
+}
+Cuando intento correrlo no aparece nada, porque?
+
+Que no aparezca nada es una buena pista: el if nunca se cumplió, ni una sola vez. Hay varios errores, y algunos van a aparecer apenas arregles el primero.
+
+Error 1: por qué no imprime nada
+
+js
+if (ventas.cantidad > 0 && ventas.precio > 0)
+
+Es la misma confusión de antes: ventas es el arreglo completo, y un arreglo no tiene .cantidad ni .precio. Eso da undefined, y undefined > 0 es false. La condición nunca se cumple, el if se salta siempre y por eso no se imprime nada.
+
+Error 2: qué es n en un for...of
+
+js
+for (const n of ventas) {
+
+En for...of, la variable no es un índice, es el elemento mismo. En cada vuelta, n ya es un objeto venta completo. Por eso ventas[n] está mal: estarías buscando una posición usando un objeto.
+
+js
+const frutas = ["pera", "uva"];
+for (const f of frutas) {
+  console.log(f); // imprime "pera" y luego "uva", no 0 y 1
+}
+
+Te recomiendo nombrar la variable venta en vez de n, porque así el código se lee como "para cada venta de ventas". Dentro del ciclo, las propiedades se acceden con venta.cantidad.
+
+Error 3: el sentido de la asignación
+
+js
+valorVenta(ventas[n]) = totalVentas;
+
+En una asignación, lo que recibe el valor va a la izquierda y lo que se calcula va a la derecha. Lo tienes al revés: estás intentando guardar algo dentro de una llamada a función, y JavaScript no lo permite. Esto te va a dar un error en cuanto el if empiece a cumplirse.
+
+Error 4: asignar no es acumular
+
+Aunque lo pongas al derecho, totalVentas = valorVenta(...) reemplaza el valor en cada vuelta, y al final solo quedaría la última venta. Un acumulador se suma a sí mismo. Recuerda el ejemplo de la guía:
+
+js
+suma = suma + n;
+
+La variable aparece a ambos lados: "lo que ya tenía, más lo nuevo".
+
+Error 5: el console.log dentro del ciclo
+
+Dentro del ciclo imprimiría el total parcial 12 veces. Lo que te piden es una función que, al terminar de recorrer, devuelva el total con return. Fuera del ciclo, no dentro. Quien llame a la función decide qué hacer con el resultado.
+
+Una decisión que puedes simplificar
+
+Para totalVendido no necesitas ningún if. La venta 8 vale 0 × 42000 = 0, así que sumarla no cambia el total. La condición cantidad > 0 solo importa en ticketPromedio, donde sí cambia el contador. Si quitas el if, tu ciclo queda más corto y sigue siendo correcto.
+
+Para reescribirlo, la estructura es:
+
+Declarar la función totalVendido con el parámetro ventas.
+Dentro, iniciar el acumulador en 0.
+Recorrer con for...of, usando venta como variable.
+En cada vuelta, sumar valorVenta(venta) al acumulador.
+Al terminar el ciclo, return del acumulador.
+
+Pruébala con console.log(totalVendido(ventas)) y tiene que darte 985000. Si te da otra cosa, pégame tu versión y vemos dónde está la diferencia.
+
+let totalVentas = 0;
+for (const venta of ventas) {
+    totalVentas = totalVentas + valorVenta(ventas[venta])
+}
+
+console.log(totalVentas)
+
+    return venta.cantidad * venta.precio;
+                 ^
+
+TypeError: Cannot read properties of undefined (reading 'cantidad')
+    at valorVenta (/home/cohorte8/Documents/riwi-mañana/algoritmia/cafe-origen-analitica/src/explorar.js:14:18)
+    at Object.<anonymous> (/home/cohorte8/Documents/riwi-mañana/algoritmia/cafe-origen-analitica/src/explorar.js:21:33)
+    at Module._compile (node:internal/modules/cjs/loader:1705:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1838:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49
+
+Ya arreglaste varias cosas (el nombre venta, la suma que se acumula, y la función valorVenta ahora sí lee venta.cantidad). Queda un solo error, y es justo el que muestra el mensaje.
+
+Cómo leer el error
+
+TypeError: Cannot read properties of undefined (reading 'cantidad')
+    at valorVenta (...explorar.js:14:18)
+    at Object.<anonymous> (...explorar.js:21:33)
+
+Se lee de abajo hacia arriba como una cadena de llamadas:
+
+La línea 21 llamó a valorVenta.
+En la línea 14, dentro de valorVenta, se intentó leer .cantidad de algo que es undefined.
+
+Es decir: a valorVenta le llegó undefined en lugar de un objeto venta. Y la línea 21 es esta:
+
+js
+valorVenta(ventas[venta])
+
+Por qué ventas[venta] da undefined
+
+Esto es lo mismo del mensaje anterior: en for...of, venta ya es el objeto venta completo, no un índice. Entonces ventas[venta] significa "busca en el arreglo la posición que se llama como este objeto", y esa posición no existe, así que devuelve undefined.
+
+Compara con el ejemplo de las frutas:
+
+js
+const frutas = ["pera", "uva"];
+for (const f of frutas) {
+  console.log(frutas[f]); // undefined, porque no existe la posición "pera"
+}
+
+f ya es "pera". No necesitas ir a buscarla de nuevo al arreglo.
+
+La corrección
+
+En esa línea, a valorVenta pásale directamente la variable del ciclo, sin los corchetes ni el nombre del arreglo. Pregúntate: "¿cuál variable ya contiene la venta de esta vuelta?"
+
+Dos cosas más para que tu código quede como lo pide el reto
+
+Esto debe vivir dentro de una función totalVendido(ventas), con el return al final, en analitica.js. Ahora lo tienes suelto en explorar.js, y por eso tu totalVentas es una variable global, que el reto prohíbe.
+Cuando lo muevas, el console.log va fuera de la función, en el archivo donde pruebas, llamando console.log(totalVendido(ventas)).
+
+Corrige esa línea y corre de nuevo: debes ver 985000. Si te sale otro número, pégame tu versión y vemos dónde está la diferencia.
+
+let ticketPromedio = 0;
+for (const venta of ventas) {
+    if (venta.cantidad > 0) {
+        temp = valorVenta(venta)
+    }
+    ticketPromedio = ticketPromedio + temp/ventas.length;
+}
+
+console.log(ticketPromedio)
+No estoy seguro de si esto esta bien, este fue el resultado:
+92083.33333333333
+
+No está bien: el resultado correcto es ≈ 89.545,45, no 92.083,33. Tu cálculo tiene tres problemas, y el número que te dio se puede explicar exactamente.
+
+Problema 1: temp se queda con el valor de la vuelta anterior
+
+js
+if (venta.cantidad > 0) {
+    temp = valorVenta(venta)
+}
+ticketPromedio = ticketPromedio + temp/ventas.length;
+
+La suma está fuera del if, así que se ejecuta en las 12 vueltas. Cuando llega la venta 8 (cantidad 0), el if no se cumple, temp no se actualiza y conserva el valor de la venta 7 (120.000). Entonces esa venta se suma dos veces. Por eso te dio:
+
+(985.000 + 120.000) ÷ 12 = 92.083,33
+
+Esa es la señal de que tu programa hace exactamente lo que escribiste, pero no lo que querías.
+
+Problema 2: dividiste entre ventas.length
+
+ventas.length es 12, pero la venta 8 no es una compra real. El divisor debe ser el número de ventas válidas, que son 11. Para eso necesitas una segunda variable, un contador, que arranca en 0 y sube solo cuando cantidad > 0.
+
+Problema 3: dividir dentro del ciclo
+
+Estás dividiendo en cada vuelta y sumando los pedacitos. Matemáticamente puede funcionar, pero es frágil y no es el patrón. Lo correcto es primero acumular el total y contar, y recién al terminar el ciclo dividir una sola vez.
+
+Un detalle más: temp no tiene let ni const, así que se crea como variable global sin que te des cuenta. El reto prohíbe variables globales. Toda variable debe declararse con let o const dentro de la función.
+
+La estructura que debes armar
+
+Función ticketPromedio(ventas).
+Dentro, dos variables iniciadas en 0: un acumulador del total y un contador de ventas válidas.
+for...of sobre las ventas.
+Dentro del ciclo, un if (venta.cantidad > 0) que contenga ambas acciones: sumar valorVenta(venta) al acumulador y subir el contador en 1. Así no queda nada "colgando" fuera de la condición.
+Después del ciclo, antes de dividir, revisa si el contador es 0. Si lo es, devuelve el valor que decidiste para el arreglo vacío, para no dividir entre cero y evitar el NaN.
+Si no, devuelve el total dividido entre el contador.
+
+Cómo verificar: con la muestra completa debe darte 89545.45... (985.000 ÷ 11). Con [] no debe darte NaN.
+
+Esta vez no te pregunto por la teoría, sino por una decisión: para el arreglo vacío, ¿vas a devolver 0 o null? Piénsalo con lo que hablamos de qué afirma cada valor, y anótalo en la bitácora. Cuando lo reescribas, pégamelo y lo revisamos.
+
+let ticketPromedio = 0;
+for (const venta of ventas) {
+    let cont = 0;
+    let temp = 0;
+    if (venta.cantidad > 0) {
+        temp = temp + valorVenta(venta)
+    } else if (venta.cantidad <= 0) {
+      console.log(venta)
+    } else if (cont = 0) {
+        console.log([])
+    }
+}
+
+console.log(ticketPromedio)
+
+Vas mejorando: ya separaste el caso cantidad > 0 y empezaste a usar un contador y un acumulador. Pero hay un error de fondo que explica por qué ticketPromedio te imprime 0, y otros que aparecerían después.
+
+Error 1: declaraste cont y temp dentro del ciclo
+
+js
+for (const venta of ventas) {
+    let cont = 0;
+    let temp = 0;
+
+Cada vuelta del ciclo es como un cuarto nuevo: las variables que declaras ahí adentro nacen de nuevo en 0 y desaparecen al terminar la vuelta. Entonces temp nunca acumula nada: en cada vuelta vale 0, le sumas una venta, y la vuelta termina. Un acumulador y un contador deben declararse antes del ciclo, para que sobrevivan entre vuelta y vuelta.
+
+js
+// idea con otro contexto
+let suma = 0;            // antes del ciclo
+for (const n of [1, 2, 3]) {
+  suma = suma + n;       // aquí solo se actualiza
+}
+
+Error 2: cont nunca sube
+
+Declaras el contador pero no hay ninguna línea que lo incremente. Recuerda el patrón: dentro del if (venta.cantidad > 0), además de sumar el valor, debes subir el contador en 1 (cont = cont + 1).
+
+Error 3: ticketPromedio nunca cambia
+
+Es la variable que imprimes al final, y en ningún momento le asignas algo. Por eso ves 0. Además, aquí hay una confusión de roles: el nombre ticketPromedio debe ser el de la función, y el resultado final es lo que esa función devuelve con return. El acumulador puede llamarse total y el contador cantidadValidas, con nombres que se lean solos.
+
+Error 4: los else if sobran y uno está mal
+
+else if (venta.cantidad <= 0): si no se cumple > 0, ya sabes que es <= 0. Y lo único que haces es imprimir la venta. Las ventas inválidas simplemente se ignoran: no necesitan rama propia.
+else if (cont = 0): usa un solo =, que asigna (pone cont en 0) en vez de comparar. Para comparar se usa ===. Y además, preguntar por el contador dentro del ciclo no tiene sentido: esa revisión va después del ciclo.
+
+Aquí además mezclaste en console.log([]), que imprime un arreglo vacío. Lo que debes hacer cuando no hay ventas válidas es devolver el valor que decidiste (0 o null), no imprimir nada.
+
+Cómo debe quedar la estructura (en orden)
+
+function ticketPromedio(ventas) {
+Antes del ciclo: total en 0 y cantidadValidas en 0.
+for (const venta of ventas).
+Dentro, un solo if (venta.cantidad > 0) con dos líneas: sumar valorVenta(venta) a total y subir cantidadValidas.
+Cierras el ciclo.
+Un if que compare cantidadValidas === 0 y haga return de tu valor para el caso vacío.
+Un return final con total / cantidadValidas.
+
+Fíjate que no hay console.log dentro de la función. Al probarla, afuera: console.log(ticketPromedio(ventas)) debe darte 89545.45..., y con [] no debe darte NaN.
+
+Una pregunta para que lo pienses antes de escribir: ¿por qué el paso 6 va antes del return final y no después? Si logras explicarlo, ya entendiste el riesgo de la división entre cero.
+
+function ticketPromedio(ventas) {
+    return total / cantidadValidas;
+}
+
+let cantidadValidas = 0;
+let total = 0;
+for (const venta of ventas) {
+    if (venta.cantidad > 0) {
+        cantidadValidas++;
+        total = total + valorVenta(venta)
+    }
+}
+
+if (cantidadValidas === 0) {
+    return (null);
+}
+
+return (ticketPromedio)
+
+Tienes todas las piezas correctas (el contador, el acumulador, el if con las dos acciones, el chequeo de cero), pero están fuera de la función. Solo el return total / cantidadValidas quedó adentro. Por eso esto no funciona, y aquí hay una pista de lo que falta.
+
+Error 1: casi todo el código está afuera de la función
+
+js
+function ticketPromedio(ventas) {
+    return total / cantidadValidas;   // única línea adentro
+}
+// ...todo lo demás queda suelto, en el archivo
+
+La función termina en la primera }. Dentro de ella, total y cantidadValidas no existen: las declaraste afuera, como variables globales (justo lo que el reto prohíbe). Y si llamas la función, no sabe qué es total para dividir.
+
+Lo de afuera tiene otro problema: ese return (null) está fuera de cualquier función. En Node, return solo se puede usar dentro de una función, así que el archivo te dará un error de sintaxis (Illegal return statement) apenas lo corras.
+
+Error 2: el return final devuelve la función misma
+
+js
+return (ticketPromedio)
+
+Eso devuelve la propia función, no un número. Lo que se devuelve es el resultado de la división: total / cantidadValidas.
+
+Error 3: el orden de los return
+
+Contestando la pregunta que te dejé: el chequeo de cantidadValidas === 0 va antes del return final porque un return termina la función inmediatamente. Si el return de la división va primero, las líneas de abajo nunca se ejecutan, y con un arreglo vacío dividirías 0 ÷ 0 y obtendrías NaN. En tu versión actual, el return total / cantidadValidas está antes que todo y se ejecutaría sin protección.
+
+Qué debes hacer
+
+No hay que escribir nada nuevo, solo reubicar. Piensa en la función como una caja: todo lo que pertenece al cálculo debe quedar entre sus llaves { }.
+
+Mueve las dos declaraciones (cantidadValidas y total) adentro de la función, arriba.
+Mueve el for...of adentro, justo después.
+Mueve el if (cantidadValidas === 0) adentro, después del ciclo.
+Deja un solo return final, que sea la división.
+Elimina el return (ticketPromedio) y el return total / cantidadValidas que quedó arriba solo.
+
+El orden de arriba hacia abajo dentro de la función debe ser: variables, ciclo, chequeo del vacío, return de la división.
+
+Un detalle de estilo: return (null) funciona, pero los paréntesis sobran; basta return null;. Y cantidadValidas++ es válido: es la forma corta de cantidadValidas = cantidadValidas + 1.
+
+Cuando lo reorganices, pruébalo así:
+
+js
+console.log(ticketPromedio(ventas));      // 89545.45...
+console.log(ticketPromedio([ventas[7]])); // solo la venta 8 (cantidad 0): null
+console.log(ticketPromedio([]));          // null
+
+Si algo falla, pégame cómo quedó y lo revisamos. Y recuerda anotar en la bitácora por qué elegiste null para el caso vacío.
+
+Para ventasPorCiudad necesito decir cuantas veces se hizo una compra en esa ciudad o decir exactamente cuantos productos precio total de todos juntos etc
+
+Ninguna de las dos: ventasPorCiudad devuelve el valor total vendido en esa ciudad, o sea la suma en pesos de todas las ventas de esa ciudad. Así lo dice el enunciado: "devuelve el total vendido en una ciudad".
+
+Qué NO es
+
+No es cuántas compras hubo (eso sería un contador).
+No es cuántas unidades salieron (eso sería sumar cantidad).
+No es una lista de productos.
+
+Solo devuelve un número: cuánto dinero se vendió allí.
+
+Qué patrón es
+
+Un acumulador con condición, igual que totalVendido, pero con un if que filtra por ciudad. Es decir: totalVendido + el if que tenías en tu primer intento, pero comparando ciudades.
+
+Ejemplo con otro contexto (sumar los precios de los productos de una categoría):
+
+js
+function totalPorCategoria(productos, categoria) {
+  let suma = 0;
+  for (const p of productos) {
+    if (p.categoria === categoria) {
+      suma = suma + p.precio;
+    }
+  }
+  return suma;
+}
+
+Lo que cambia en tu caso
+
+Dos parámetros: ventas y ciudad.
+Acumulador en 0 antes del ciclo.
+En el if, comparas la ciudad de la venta con la que te pasan, pero normalizando ambos lados con .trim().toLowerCase(). Así "Medellín" coincide con "medellín ".
+Si coincide, sumas valorVenta(venta) (no precio, porque hay que multiplicar por la cantidad).
+return del acumulador, fuera del ciclo.
+
+Qué debe dar: para "Medellín" suman las ventas 1, 2... no, ojo: las de Medellín son la 1, 4, 5 y 11. Haz la suma a mano primero (84.000 + 42.000 + 135.000 + 95.000 = 356.000). Si tu función da eso, la venta 5 ("medellín ") está incluida. Esa suma te sirve además como una de las trazas de la bitácora.
+
+Sobre el arreglo vacío: aquí 0 sí es una respuesta honesta ("no se vendió nada en esa ciudad"), a diferencia del ticket promedio. Anótalo en la bitácora.
+
+Escríbela y pégamela para revisarla.
+
+function ventasPorCiudad(ventas) {
+    for (const venta of ventas) {
+        let suma = 0;
+        venta.ciudad.trim().toLowerCase()
+        if (venta.ciudad === "medellin") {
+            suma = suma + valorVenta(venta)
+        }
+    }
+    return
+}
+
+console.log(ventasPorCiudad(ventas))
+Sale undefined
+
+Sale undefined por un motivo muy concreto, y hay otros errores que aparecerían después.
+
+Error 1: por qué sale undefined
+
+js
+return
+
+Un return sin nada al lado devuelve undefined. Tienes el acumulador suma, pero nunca lo devuelves. Además, suma está declarada dentro del ciclo, así que ni siquiera existe en ese punto. Debes devolver el acumulador: return seguido de su nombre.
+
+Error 2: suma está dentro del ciclo
+
+Es el mismo error de antes con cont y temp: dentro del ciclo, suma nace en 0 en cada vuelta y desaparece al terminarla. Debe declararse antes del for.
+
+Error 3: .trim().toLowerCase() no cambia nada si no guardas el resultado
+
+js
+venta.ciudad.trim().toLowerCase()
+
+Los métodos de texto no modifican el original, devuelven un texto nuevo. Esa línea calcula el texto limpio y lo tira a la basura. En la siguiente línea, venta.ciudad sigue siendo "medellín ". Tienes que guardar el resultado en una variable y usar esa variable en la comparación.
+
+js
+const nombre = "  CALI ";
+const limpio = nombre.trim().toLowerCase(); // limpio vale "cali"
+// nombre sigue valiendo "  CALI "
+
+Error 4: falta el segundo parámetro
+
+La función debe recibir ventas y ciudad. Ahora comparas contra "medellin" escrito a mano, y eso tiene dos problemas:
+
+La función solo serviría para Medellín.
+Está escrito sin tilde, pero en tus datos es "Medellín" con tilde. Aunque normalices, "medellín" no es igual a "medellin".
+
+La solución es normalizar también el parámetro ciudad y comparar los dos textos ya normalizados. Así no escribes ninguna ciudad fija dentro de la función.
+
+Error 5: la llamada no pasa ciudad
+
+js
+console.log(ventasPorCiudad(ventas))
+
+Con el segundo parámetro, la llamada debe ser ventasPorCiudad(ventas, "Medellín").
+
+Orden que debe tener la función
+
+Parámetros: ventas y ciudad.
+Antes del ciclo: acumulador en 0 y una variable con la ciudad buscada ya normalizada (esto se calcula una sola vez, no en cada vuelta).
+for...of.
+Dentro del ciclo: guarda la ciudad de la venta normalizada en una variable y compárala con la buscada, con ===.
+Si coinciden, suma valorVenta(venta) al acumulador.
+Fuera del ciclo, return del acumulador.
+
+Cómo verificar: ventasPorCiudad(ventas, "Medellín") debe dar 356000. Prueba también con "  MEDELLÍN " (con mayúsculas y espacios) y debe dar lo mismo. Y con [] debe dar 0.
+
+Reescríbela y pégamela para revisarla.
+
+El factor depende de la complejidad en tiempo de cada funcion, no de la funcion en si. Se calcula asi:
+
+factor = (nuevo n ÷ n medido) elevado a la potencia de la complejidad
+
+De 10.000 a 1.000.000 ventas, n se multiplica por 100. Entonces:
+
+Complejidad	Que se hace	Factor
+O(1)	100 elevado a 0	1 (no cambia)
+O(n)	100 elevado a 1	100
+O(n²)	100 elevado a 2	10.000
+Factor de cada funcion
+Funcion	Tiempo	Factor
+valorVenta	O(1)	1
+primeraVenta	O(1)	1
+totalVendido, unidadesVendidas	O(n)	100
+ventaMayor, ticketPromedio, ventasPorCiudad	O(n)	100
+totalVendidoM, unidadesVendidasM, ventasPorCiudadM	O(n)	100
+totalPorCiudad, unidadesPorProducto	O(n)	100
+ventasDelDia	O(n)	100
+totalCiudadCadena, totalCiudadUnaPasada	O(n)	100
+topProductosPorValor	O(n + p log p)	100 (ver nota)
+clientesRecurrentes	O(n²)	10.000
+Aclaraciones para el informe
+
+topProductosPorValor: su tiempo tiene dos partes. El recorrido de las ventas crece con n (factor 100), pero el sort depende de p, los productos distintos, que en tu generador siempre son 5. Como p no crece con n, el sort no se multiplica, y el factor practico es 100. Escribe esa explicacion en una nota.
+
+Las versiones con 4 recorridos (totalCiudadCadena) usan el mismo factor 100 que las de un recorrido, por lo que ya viste: las constantes no cambian como crece la funcion. Su tiempo sera mayor, pero se multiplica igual.
+
+clientesRecurrentes: el factor 10.000 supone el comportamiento tipico. Menciona que, por el costo oculto de includes, el peor caso podria ser peor.
+
+Como se usa
+tiempo proyectado a 1.000.000 = tiempo medido a 10.000 × factor
+
+Ejemplo con un numero inventado: si clientesRecurrentes tardara 100 ms con 10.000 ventas, con 1.000.000 tardaria 100 × 10.000 = 1.000.000 ms, que son 1.000 segundos, unos 17 minutos. Cambia ese numero por el tuyo.
+
+Dos precauciones
+Funciones de menos de 1 ms: multiplicar "menos de 1 ms" por 100 da un numero poco confiable. Para esas, repite la funcion muchas veces al medir y divide, o mide directamente con 1.000.000 de ventas, que en una funcion lineal es rapido. Si lo haces, anota que ese dato es medido y no proyectado.
+Es una estimacion: deja escrito en la seccion que el factor supone que la funcion sigue creciendo igual, y que a tamanos grandes pueden influir la memoria disponible y otros efectos.
+
+Cuando tengas tus tiempos medidos con 10.000 ventas, pegame la tabla y revisamos las proyecciones y las unidades.
+
+No tengo ningun compañero para hacerlo, haz la revision del compañero tu
+
+Puedo hacer la revision, pero con dos condiciones.
+
+1. Necesito ver el documento
+
+Hasta ahora no me has pegado RENDIMIENTO.md, y no voy a inventar observaciones sobre algo que no he leido. Pegamelo completo (con la tabla, la proyeccion, los riesgos y el plan) y lo reviso como lo haria un desarrollador que no conoce tu proyecto.
+
+2. En la bitacora debe decir la verdad
+
+Una revision hecha por mi no es una revision de un companero, y presentarla como tal seria falsificar el registro. Eso te puede costar mas que no tener revisor. Escribelo asi, sin esconderlo:
+
+## Revision del informe (MiniReto 8)
+
+Revisor: Claude (asistente de IA). No tuve un companero disponible para
+la revision, asi que pedi una revision a un asistente de IA.
+
+Observacion 1: (lo que Claude te dijo, tal cual)
+Mi respuesta: (aceptada / aceptada en parte / no aceptada, y por que)
+Cambio realizado: (que modificaste en RENDIMIENTO.md, o por que no cambiaste nada)
+
+Con eso cumples el espiritu del paso (alguien externo lee tu informe y tu respondes con criterio), y la honestidad queda a tu favor.
+
+Una opcion mejor, si tienes diez minutos
+
+Cualquier persona sirve como lector, aunque no sepa programar: un familiar, un amigo, otro estudiante del grupo, o tu instructor. No necesita opinar de Big O. Basta que lea el informe y te diga donde se perdio, porque el reto pide un documento "claro para cualquier desarrollador". Si consigues a alguien asi, usa su observacion real, y si quieres, agrega la mia como segunda.
+
+Que voy a revisar cuando lo pegues
+Si todas las funciones del motor estan en la tabla.
+Si cada justificacion sale del codigo y no solo del resultado.
+Si las unidades (ms u ops) estan claras y se distingue lo medido de lo calculado.
+Si la proyeccion usa el factor correcto y las conversiones de unidades estan bien.
+Si clientesRecurrentes esta de primero en riesgos y el plan identifica el trabajo repetido.
+Si se entiende sin conocer el proyecto.
+
+Pegame el RENDIMIENTO.md y te devuelvo las observaciones, ordenadas de la mas importante a la menos.
