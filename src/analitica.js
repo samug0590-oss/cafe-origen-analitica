@@ -250,4 +250,67 @@ function clientesRecurrentesMap(conteoCliente) {
     return recurrentes
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena, clientesRecurrentesSet, comprasPorCliente, clientesRecurrentesMap};
+function comboRegaloFuerzaBruta(catalogo, valor) {
+    for (let i = 0; i < catalogo.length; i++) {
+        for (let j = i + 1; j < catalogo.length; j++) {
+            if (catalogo[i].precio + catalogo[j].precio === valor) {
+                return [catalogo[i], catalogo[j]];
+            }
+        }
+    }
+    return null;
+}
+
+function comboRegalo(catalogo, valor) {
+    const vistos = new Map();
+    for (const producto of catalogo) {
+        const complemento = valor - producto.precio;
+        if (vistos.has(complemento)) {
+            return [vistos.get(complemento), producto];
+        }
+        vistos.set(producto.precio, producto);
+    }
+    return null;
+}
+
+function productoEstrellaPorCiudad(ventas) {
+    const conteoPorCiudad = new Map();
+    for (const venta of ventas) {
+        const ciudad = venta.ciudad.trim().toLowerCase();
+        if (!conteoPorCiudad.has(ciudad)) {
+            conteoPorCiudad.set(ciudad, new Map());
+        }
+        const conteoProductos = conteoPorCiudad.get(ciudad);
+        if (conteoProductos.has(venta.producto)) {
+            conteoProductos.set(venta.producto, conteoProductos.get(venta.producto) + 1);
+        } else {
+            conteoProductos.set(venta.producto, 1);
+        }
+    }
+
+    const estrellas = {};
+    for (const [ciudad, conteoProductos] of conteoPorCiudad) {
+        let mejorProducto = null;
+        let mejorCuenta = 0;
+        for (const [producto, cuenta] of conteoProductos) {
+            if (cuenta > mejorCuenta) {
+                mejorProducto = producto;
+                mejorCuenta = cuenta;
+            }
+        }
+        estrellas[ciudad] = mejorProducto;
+    }
+    return estrellas;
+}
+
+function primerClienteUnico(ventas) {
+    const compras = comprasPorCliente(ventas);
+    for (const venta of ventas) {
+        if (compras.get(venta.cliente) === 1) {
+            return venta.cliente;
+        }
+    }
+    return null;
+}
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena, clientesRecurrentesSet, comprasPorCliente, clientesRecurrentesMap, comboRegaloFuerzaBruta, comboRegalo, productoEstrellaPorCiudad,primerClienteUnico};

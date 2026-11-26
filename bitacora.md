@@ -427,3 +427,97 @@ Lo que se gana: El tiempo pasa de O(n^2) a O(n).
 Lo que se paga: La memoria pasa de O(r) a O(c), con c clientes distintos. La original solo guardaba los recurrentes, y la nueva tambien guarda los vistos (Set) o todos los contadores (Map). Cons los datos generados hay hasta 33.000 clientes distintos con 100.000 ventas, es memoria pero poca
 Porque el trato conviene: El tiempo era el mayor factor que afectaba el rendimiento, y la memoria extra es pequeña frente a eso. En un servidor con memoria limitada, conviene verificarlo, pero la libreta es de tamaño proporcional a los clientes, no a las ventas.
 Matiz: O(1) en has y get es promedio, una tabla hash tiene costos propios (espacio extra por entrada, crecimiento interno). Y la ventaja se nota con volumenes grandes: con 12 ventas la original no es peor
+
+Inicio del uso de I.A, Claude, Motivo: Falta de tiempo para los entregables Algoritmia Semana 2 Dia 2
+## Minireto 10: combos de regalo y frecuencias
+
+### 1. Catalogo
+src/catalogo.js representa el catalogo como un arreglo de 8 objetos con las propiedades nombre y precio, en el orden del enunciado. Los precios son numeros sin puntos. Se exporta con module.exports.
+
+### 2. comboRegaloFuerzaBruta (referencia)
+Idea: dos ciclos. El de afuera elige un producto y el de adentro recorre solo los siguientes (el segundo indice arranca en i + 1). Asi cada par se prueba una sola vez y nunca se empareja un producto consigo mismo.
+Que devuelve: un arreglo con los dos productos, o null si ninguna pareja suma el valor.
+Complejidad: tiempo O(n^2), espacio O(1).
+Justificacion: hay dos ciclos anidados sobre el catalogo y se prueban n(n-1)/2 pares; solo usa indices, sin estructuras extra.
+
+### 3. comboRegalo (optimizada con Map)
+Idea: para cada producto, el complemento es valor - precio. Se recorre el catalogo una sola vez con un Map que guarda los precios ya vistos (clave: precio, valor: producto). Si el complemento ya esta como clave, esa es la pareja; si no, se guarda el precio actual y se sigue.
+Detalle clave: la pregunta por el complemento se hace ANTES de guardar el producto actual. Si se guardara primero, con 84.000 el producto de 42.000 se encontraria a si mismo y devolveria el mismo producto dos veces.
+Que devuelve: un arreglo con el producto que estaba guardado y el actual, o null si el ciclo termina sin pareja.
+Complejidad: tiempo O(n), espacio O(n).
+Justificacion: un solo for...of; has, get y set cuestan O(1) por vuelta; el Map puede llegar a guardar todos los precios del catalogo. Es el mismo intercambio del Minireto 9: se paga memoria para ganar tiempo.
+Limitacion conocida: si dos productos distintos tuvieran el mismo precio, el Map conservaria solo el ultimo. No ocurre con este catalogo.
+
+### 4. Pruebas y casos borde
+
+| Valor                             | Fuerza bruta                             | Optimizada |
+|-----------------------------------|------------------------------------------|------------|
+| 87.000                            | Origen Huila 500 g + Origen Sierra 500 g | igual      |
+| 61.000                            | Origen Narino 250 g + Taza de ceramica   | igual      |
+| 10.000 (menor que cualquier suma) | null                                     | null       |
+| 100.000 (ningun par suma eso)     | null                                     | null       |
+| 84.000 (doble de 42.000)          | null                                     | null       |
+| 0                                 | null                                     | null       |
+
+| Caso borde                                  | Resultado | Por que                                                                     |
+|---------------------------------------------|-----------|-----------------------------------------------------------------------------|
+| Catalogo vacio                              | null      | el ciclo no da ninguna vuelta                                               |
+| Catalogo con un solo producto               | null      | no hay con quien emparejarlo                                                |
+| Valor que es el doble de un precio (84.000) | null      | los dos productos deben ser distintos; por eso se pregunta antes de guardar |
+| Valor 0 o negativo                          | null      | el complemento seria negativo y ningun precio lo cumple                     |
+
+Las dos versiones coinciden en todos los valores probados. Con este catalogo, 87.000 y 61.000 tienen una sola pareja posible, asi que ambas devuelven exactamente la misma.
+
+### 5. Traza de la version optimizada para 87.000
+
+| Vuelta | Producto            | Precio | Complemento (87.000 - precio) | Esta en el Map?         | Accion                        | Map despues (precios) |
+|--------|---------------------|--------|-------------------------------|-------------------------|-------------------------------|-----------------------|
+| 1      | Origen Narino 250 g | 26.000 | 61.000                        | No                      | guardar el precio             | 26.000                |
+| 2      | Origen Huila 500 g  | 42.000 | 45.000                        | No                      | guardar el precio             | 26.000, 42.000        |
+| 3      | Origen Sierra 500 g | 45.000 | 42.000                        | Si (Origen Huila 500 g) | devolver la pareja y terminar | 26.000, 42.000        |
+
+Resultado: Origen Huila 500 g + Origen Sierra 500 g (42.000 + 45.000 = 87.000). Solo se visitaron 3 de los 8 productos y el catalogo se recorre una sola vez como maximo, en lugar de probar hasta 28 pares.
+
+### 6. productoEstrellaPorCiudad
+Decision de conteo: se cuentan apariciones en las ventas (cada venta suma 1), no unidades vendidas.
+Normalizacion: la ciudad se compara con trim y toLowerCase, asi "medellin " (venta 5) cae en el mismo grupo que "Medellin". Las claves del resultado quedan en minuscula.
+Estructura: un Map de Maps. El exterior va de ciudad a un Map interior, y el interior va de producto a cantidad de apariciones. Primero se cuenta; despues se recorre cada Map interior eligiendo el producto con la cuenta mas alta.
+Regla de desempate: gana el producto que aparecio primero en las ventas de esa ciudad. Se cumple porque el Map conserva el orden de insercion y la comparacion es estricta (mayor que, no mayor o igual), de modo que un empate nunca reemplaza al primero.
+Arreglo vacio: devuelve un objeto vacio, sin error.
+
+| Ciudad   | Conteo de productos                                                  | Producto estrella                              |
+|----------|----------------------------------------------------------------------|------------------------------------------------|
+| Medellin | Huila 500 g: 2, Sierra 500 g: 1, Prensa francesa: 1                  | Origen Huila 500 g                             |
+| Bogota   | Narino 250 g: 3, Molino manual: 1                                    | Origen Narino 250 g                            |
+| Cali     | Prensa francesa: 1, Huila 500 g: 1, Sierra 500 g: 1 (empate de tres) | Prensa francesa (primero en aparecer, venta 3) |
+| Pereira  | Huila 500 g: 1                                                       | Origen Huila 500 g                             |
+
+Complejidad: tiempo O(n), espacio O(c x p).
+Justificacion: un recorrido de las ventas con operaciones O(1) por vuelta, y luego un recorrido de los Maps cuyo total de entradas nunca supera n (no es O(n^2) aunque haya Maps anidados). La memoria depende de las ciudades (c) y los productos distintos (p), y en el peor caso llega a O(n).
+
+### 7. primerClienteUnico
+Por que dos recorridos: para saber si un cliente aparece una sola vez hay que haber visto todas las ventas, porque podria reaparecer al final. Primer recorrido: contar las compras de cada cliente con comprasPorCliente (Minireto 9), reutilizada. Segundo recorrido: recorrer las ventas en su orden original y devolver el primer cliente con cuenta exactamente 1.
+Por que el segundo recorrido es sobre las ventas y no sobre el Map: el enunciado pide "el primero en orden de las ventas".
+Que devuelve: el cliente, o null si no hay ninguno o el arreglo esta vacio.
+
+| Entrada                    | Resultado   |
+|----------------------------|-------------|
+| Los 12 datos del Dia 1     | C04         |
+| []                         | null        |
+| Todos los clientes repiten | null        |
+| Una sola venta             | ese cliente |
+
+Verificacion a mano con los 12 datos: las ventas 1 a 4 son de C01, C02, C03 y C01, y los tres aparecen mas de una vez. La venta 5 es de C04, que aparece una sola vez, asi que se devuelve C04.
+Complejidad: tiempo O(n), espacio O(c).
+Justificacion: dos recorridos de n elementos suman 2n, y Big O elimina la constante, asi que es O(n). El Map guarda un conteo por cliente distinto.
+
+### 8. Clasificacion de complejidad
+
+| Funcion                   | Tiempo | Espacio  | Justificacion                                                                   |
+|---------------------------|--------|----------|---------------------------------------------------------------------------------|
+| comboRegaloFuerzaBruta    | O(n^2) | O(1)     | dos ciclos anidados sobre el catalogo; n(n-1)/2 pares; solo usa indices         |
+| comboRegalo (Map)         | O(n)   | O(n)     | un solo ciclo con has, get y set en O(1); el Map guarda los precios vistos      |
+| productoEstrellaPorCiudad | O(n)   | O(c x p) | un recorrido de las ventas y otro de los Maps con a lo sumo n entradas en total |
+| primerClienteUnico        | O(n)   | O(c)     | dos recorridos (2n = O(n)) y un Map con los clientes distintos                  |
+
+Conclusion: las tres funciones pedidas son O(n) en tiempo. La unica cuadratica es la fuerza bruta de los combos, que sirve de referencia para comprobar la correccion de la version con Map. En los tres casos el patron es el mismo del Minireto 9: se cambia una busqueda lenta por una consulta O(1) en un Map, a cambio de memoria proporcional a los datos distintos.
