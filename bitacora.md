@@ -403,3 +403,15 @@ Ejemplos (incluyendo casos borde):
 -En una muestra normal(con clientes que se repiten y que no) Devuelve correctamente los cientes recurrentes (que han comprado mas de 1 vez) en 407,202ms
 -Un solo elemento ([ventas[0]]) No hay clientes recurrentes, ninguno compro mas de una vez, demoro 4,417ms
 -Arreglo vacio ([]) No hay clientes recurrentes, ninguno compro mas de una vez, demoro 0.138ms
+-Todas las ventas del mismo cliente: Aparece ese cliente una sola vez
+-Un cliente con 3 compras: Aparece una sola vez no dos
+-Los 12 datos originales: C01, C02, C03
+
+Fuerza bruta:
+Dos ciclos, compara cada venta con las siguientes. Complejidad: O(n²) en tiempo, con O(n-1)/2 comparaciones, mas el includes escondido. Memoria: O(r), r recurrentes
+
+Optimizacion:
+Se busca varias veces el mismo cliente, la idea: Con un set, "si este cliente ya estaba en los vistos, es recurrente". Con un Map, "cuento las compras de cada cliente y al final me quedo con los que tienen mas de una"
+
+Implementar:
+Implementado en: 

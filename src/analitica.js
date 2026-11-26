@@ -214,4 +214,40 @@ function totalCiudadUnaPasada(ventas, ciudad) {
     return suma
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena};
+function clientesRecurrentesSet(ventas) {
+    const vistos = new Set();
+    const recurrentes = new Set();
+    for (const venta of ventas) {
+        if (vistos.has(venta.cliente)) {
+            recurrentes.add(venta.cliente)
+        } else {
+            vistos.add(venta.cliente)
+        }
+    }
+    return [...recurrentes]
+}
+
+function comprasPorCliente(ventas) {
+    const conteoCliente = new Map();
+    for (const venta of ventas) {
+        if (conteoCliente.has(venta.cliente)) {
+            const cuentaAnterior = conteoCliente.get(venta.cliente)
+            conteoCliente.set(venta.cliente, cuentaAnterior + 1)
+        } else {
+            conteoCliente.set(venta.cliente, 1)
+        }
+    }
+    return conteoCliente
+}
+
+function clientesRecurrentesMap(conteoCliente) {
+    const recurrentes = [];
+    for (const [cliente, cantidad] of conteoCliente) {
+        if (cantidad > 1) {
+           recurrentes.push(cliente)
+        }
+    }
+    return recurrentes
+}
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena, clientesRecurrentesSet, comprasPorCliente, clientesRecurrentesMap};
