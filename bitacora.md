@@ -414,4 +414,16 @@ Optimizacion:
 Se busca varias veces el mismo cliente, la idea: Con un set, "si este cliente ya estaba en los vistos, es recurrente". Con un Map, "cuento las compras de cada cliente y al final me quedo con los que tienen mas de una"
 
 Implementar:
-Implementado en: 
+Implementado en: analitica.js
+Comprobado en: medirTiempo.js
+
+| n       | Original (ms) | Set (ms)     | Map (ms) |
+|---------|---------------|--------------|----------|
+| 1.000   | 6,173ms       | Menos de 1ms | 1,174ms  |
+| 10.000  | 407,202ms     | 4,084ms      | 2,634ms  |
+| 100.000 | 1.03mins      | 38,657ms     | 26,286ms |
+
+Lo que se gana: El tiempo pasa de O(n^2) a O(n).
+Lo que se paga: La memoria pasa de O(r) a O(c), con c clientes distintos. La original solo guardaba los recurrentes, y la nueva tambien guarda los vistos (Set) o todos los contadores (Map). Cons los datos generados hay hasta 33.000 clientes distintos con 100.000 ventas, es memoria pero poca
+Porque el trato conviene: El tiempo era el mayor factor que afectaba el rendimiento, y la memoria extra es pequeña frente a eso. En un servidor con memoria limitada, conviene verificarlo, pero la libreta es de tamaño proporcional a los clientes, no a las ventas.
+Matiz: O(1) en has y get es promedio, una tabla hash tiene costos propios (espacio extra por entrada, crecimiento interno). Y la ventaja se nota con volumenes grandes: con 12 ventas la original no es peor

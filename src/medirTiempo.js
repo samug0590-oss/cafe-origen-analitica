@@ -1,7 +1,7 @@
-const {clientesRecurrentes, unidadesVendidas, ticketPromedio, ventasPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalCiudadCadena, totalCiudadUnaPasada, valorVenta} = require('./analitica');
+const {clientesRecurrentes, unidadesVendidas, ticketPromedio, ventasPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalCiudadCadena, totalCiudadUnaPasada, valorVenta, clientesRecurrentesSet, clientesRecurrentesMap, comprasPorCliente} = require('./analitica');
 const {generarVentas} = require('./generador')
 
-const tamanos = [1000, 2000, 4000, 8000, 16000]
+const tamanos = [1000, 10000, 100000]
 
 function algo(tamanos) {
     for (tamanos of tamanos) {
@@ -12,8 +12,22 @@ function algo(tamanos) {
     }
 }
 
-algo([])
-console.log(clientesRecurrentes([]))
+//algo(tamanos)
+
+function algo1(tamanos) {
+    for (tamanos of tamanos) {
+        const ventas = generarVentas(tamanos)
+        console.time("set")
+        clientesRecurrentesSet(ventas)
+        console.timeEnd("set")
+
+        console.time("Map")
+        clientesRecurrentesMap(comprasPorCliente(ventas))
+        console.timeEnd("Map")
+    }
+}
+
+algo1(tamanos)
 
 function medirTiempoTodas(tamanos) {
     for (tamanos of tamanos) {

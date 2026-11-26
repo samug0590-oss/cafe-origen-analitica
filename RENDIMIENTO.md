@@ -49,7 +49,7 @@ Café Origen es un negocio de café y productos relacionados, y este proyecto es
 | unidadesPorProducto  | 2,721ms           | 100    | 272,1ms                |
 | topProductosPorValor | 2,505ms           | 100    | 250,5ms                |
 | ventasDelDia         | 1,139ms           | 100    | 113,9ms                |
-| clientesRecurrentes  | 407,202ms         | 10.000 | 40,7202s               |
+| clientesRecurrentes  | 407,202ms         | 10.000 | 67,867mins             |
 | totalCiudadCadena    | 3,138ms           | 100    | 313,8ms                |
 | totalCiudadUnaPasada | 1,556ms           | 100    | 155,6ms                |
 | primerVenta          | 1 op              | 1      | 1 op                   |
@@ -93,5 +93,3 @@ Idea: Se almacenaria una libre (un diccionario) con la cuenta de compras por cli
 Resultado esperado: El tiempo pasaria de 0(n²) a 0(n)
 Costo: Se usa memoria extra proporcional a los clientes distintos, O(c) a cambio de tiempo
 Aclaracion: Esta seccion es un plan, la implementacion es del MiniReto 9
-
-## 7. Limitaciones
