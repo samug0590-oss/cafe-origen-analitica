@@ -611,3 +611,68 @@ Resultado: Filtros de papel x100 + Origen Huila 1 kg = 97.000, sin superar 100.0
 | parMasCercano    | O(n log n) | O(n)    | ordenar domina: sort cuesta O(n log n) y la fase de dos punteros solo O(n) (cada vuelta mueve un puntero, a lo sumo n - 1 vueltas); la copia ordenada ocupa O(n) |
 
 Conclusion: la ventana deslizante evita recalcular lo que no cambia, y los dos punteros aprovechan que los datos estan ordenados para descartar candidatos sin probar todos los pares (el equivalente por fuerza bruta seria O(n^2)). El costo de ordenar es lo que hace que parMasCercano sea O(n log n) y no O(n); si el catalogo llegara ya ordenado, bastaria O(n).
+
+## Minireto 12: Analitica v1.0, lanzamiento
+
+### 1. Que se hizo
+- src/reporte.js se reescribio para usar solo funciones optimizadas. Cada seccion es una funcion pequena que imprime lo que calculan las funciones de analitica.js, y el reporte no calcula nada por su cuenta.
+- Secciones nuevas: clientes recurrentes (con Set), producto estrella por ciudad, combo de regalo para una tarjeta de 87.000, cliente para cupon (primer cliente de una sola compra) y mejor semana.
+- node src/reporte.js usa los 12 datos reales; node src/reporte.js n genera n ventas al azar. El parametro se lee con process.argv[2]; si no es un entero positivo, el programa explica como se usa y termina.
+- src/comparar.js mide el tiempo de calculo del reporte v0.1 y del v1.0. README.md y RENDIMIENTO.md se actualizaron.
+
+### 2. Decisiones de diseno
+- Parametro opcional: sin argumento se usan los datos reales, porque son la referencia de correccion.
+- Clientes recurrentes: el reporte muestra la cantidad y 5 ejemplos. Con 100.000 ventas hay miles de clientes recurrentes y listarlos todos no le sirve a la gerente.
+- Mejor semana: el generador solo produce 6 fechas distintas, asi que una semana de 7 dias no cabe en los datos generados. La seccion usa los totales diarios de septiembre del Minireto 11 (src/ventasDiarias.js) y lo indica en el reporte.
+- Linea base de la comparacion: la v0.1 se mide con sus secciones originales mas la funcion original de clientes recurrentes, porque esa era la version que la gerente encontro lenta. La v1.0 hace ademas cuatro analisis nuevos y aun asi es mas rapida.
+- Estimacion: ejecutar la v0.1 con 100.000 ventas tardaria minutos; se estima multiplicando la medicion con 10.000 por 100 (factor cuadratico) y se marca como estimado. Es un valor minimo, porque el includes del metodo original pesa mas con muchos clientes repetidos.
+- Lo medido es el calculo, sin imprimir, para comparar los algoritmos y no la consola.
+
+### 3. Resultados de las pruebas
+| Prueba                                         | Resultado                                                                                                                                                                       |
+|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| node src/reporte.js (12 datos)                 | las secciones completas con los valores esperados (total 985.000, 21 unidades, 4 ciudades, top 3, recurrentes C01 C02 C03, cupon C04, mejor semana dias 24 al 30 con 3.670.000) |
+| node src/reporte.js 100000                     | todas las secciones; analisis y reporte en (copia el tiempo de tu terminal) ms                                                                                                  |
+| node src/reporte.js abc                        | muestra el uso y termina sin error                                                                                                                                              |
+| busqueda de NaN, undefined y null en la salida | sin coincidencias en las dos ejecuciones                                                                                                                                        |
+| node src/verificar.js                          | todo en OK                                                                                                                                                                      |
+
+### 4. Comparacion v0.1 contra v1.0 (detalle en RENDIMIENTO.md, seccion 8)
+(Copia aqui la tabla que muestra node src/comparar.js.)
+Conclusion: la v0.1 crece de forma cuadratica por los clientes recurrentes; la v1.0 es lineal. Con 100.000 ventas la v1.0 responde en milisegundos, muy por debajo del limite de un segundo que exige el marketplace.
+
+### 5. Resumen de los 12 minirretos
+
+| MiniReto                            | Que construi                                                                                                | Pieza del producto                 |
+|-------------------------------------|-------------------------------------------------------------------------------------------------------------|------------------------------------|
+| 1. Primer tueste                    | repositorio, arreglo de 12 ventas, explorar.js, diccionario de datos y casos borde                          | datos.js                           |
+| 2. Los numeros del dia              | valorVenta, total, unidades, venta mayor, ticket promedio y ventas por ciudad con ciclos y casos vacios     | indicadores basicos                |
+| 3. Del ciclo al metodo              | versiones con map, filter y reduce, verificar.js, agrupaciones y ranking                                    | reportes por ciudad y producto     |
+| 4. Analitica v0.1                   | reporte por consola, ventasDelDia, depuracion de los errores de Bogota duplicada y NaN en el ticket, README | primera version entregable         |
+| 5. Cuanto cuesta cada reporte       | generador de ventas y contador de operaciones; funciones lineales y una constante                           | herramientas de medicion           |
+| 6. El reporte que se volvio lento   | clientes recurrentes con dos ciclos anidados, tiempos con console.time y estimacion de 100.000 y 1.000.000  | diagnostico del cuello de botella  |
+| 7. Tiempo, memoria y cadenas        | complejidad espacial; cadena de metodos contra una sola pasada                                              | totalCiudad final                  |
+| 8. Analitica v0.2                   | informe RENDIMIENTO.md, proyeccion, riesgos y plan de optimizacion                                          | informe de rendimiento             |
+| 9. Clientes recurrentes lineal      | versiones con Set y con Map                                                                                 | recurrentes optimizado             |
+| 10. Combos de regalo y frecuencias  | complemento con Map, producto estrella por ciudad y primer cliente unico                                    | analisis comerciales               |
+| 11. La mejor racha y el presupuesto | ventana deslizante y dos punteros                                                                           | analisis temporal y de presupuesto |
+| 12. Analitica v1.0                  | reporte final integrado, comparacion v0.1 contra v1.0, README de producto                                   | producto final                     |
+
+### 6. Estrategia aplicada en cada optimizacion
+
+| Problema                                        | Fuerza bruta                                                               | Que trabajo se repetia                           | Estrategia                                                                                               | Resultado                                    |
+|-------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| totalCiudad (MiniReto 7)                        | cadena de map, filter, map y reduce: 4 recorridos y 3 arreglos intermedios | se creaban arreglos que solo se usaban una vez   | un solo recorrido con acumulador                                                                         | tiempo O(n) en ambas, memoria de O(n) a O(1) |
+| Clientes recurrentes (MiniReto 9)               | dos ciclos anidados y includes: O(n^2)                                     | se buscaba muchas veces al mismo cliente         | recordar lo ya visto con Set y Map                                                                       | O(n) en tiempo, memoria O(c)                 |
+| Combo de regalo (MiniReto 10)                   | probar todos los pares: O(n^2)                                             | se probaban parejas que no podian sumar el valor | calcular el complemento y buscarlo en un Map de precios vistos                                           | O(n) en tiempo, memoria O(n)                 |
+| Producto estrella y cliente unico (MiniReto 10) | contar con ciclos anidados                                                 | se recontaba al buscar                           | conteo de frecuencias con Map (de Maps en el caso de las ciudades); dos recorridos para el cliente unico | O(n)                                         |
+| Mejor semana (MiniReto 11)                      | sumar cada bloque de k dias desde cero: O(n x k)                           | se sumaban muchas veces los mismos dias          | ventana deslizante: sumar el que entra y restar el que sale                                              | O(n), no depende de k                        |
+| Par mas cercano (MiniReto 11)                   | probar todos los pares: O(n^2)                                             | se probaban parejas sin aprovechar el orden      | ordenar y usar dos punteros desde los extremos                                                           | O(n log n), dominado por ordenar             |
+
+Patron comun: en todos los casos la mejora vino de identificar que informacion se recalculaba y guardarla (Set, Map, suma de la ventana) o de aprovechar una propiedad de los datos (el orden), a cambio de algo de memoria.
+
+### 7. Historial del repositorio
+(Pega aqui el resultado de git log --oneline. Debe haber un commit por minireto; si algunos se juntaron en un solo commit, anotalo aqui: no se reescribio el historial.)
+
+### 8. Verificacion de entrega
+Se clono el repositorio en una carpeta nueva con git clone y se ejecutaron node src/reporte.js, node src/reporte.js 100000 y node src/verificar.js sin errores.
