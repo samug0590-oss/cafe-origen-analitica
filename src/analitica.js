@@ -313,4 +313,77 @@ function primerClienteUnico(ventas) {
     return null;
 }
 
-module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena, clientesRecurrentesSet, comprasPorCliente, clientesRecurrentesMap, comboRegaloFuerzaBruta, comboRegalo, productoEstrellaPorCiudad,primerClienteUnico};
+//Empieza el uso de I.A. Modelo: Claude gratuito. Motivo: Falta de tiempo para los entregables de algorimita Semana 2 Dia 2
+// Fuerza bruta: suma cada bloque de k dias desde cero.
+// Tiempo O(n * k), espacio O(1). "inicio" es el numero de dia (1 = primer dia).
+function mejorSemanaBruta(dias, k) {
+    if (k <= 0 || k > dias.length) {
+        return null;
+    }
+    let mejorTotal = null;
+    let mejorInicio = null;
+    for (let i = 0; i <= dias.length - k; i++) {
+        let suma = 0;
+        for (let j = i; j < i + k; j++) {
+            suma = suma + dias[j];
+        }
+        if (mejorTotal === null || suma > mejorTotal) {
+            mejorTotal = suma;
+            mejorInicio = i + 1;
+        }
+    }
+    return { total: mejorTotal, inicio: mejorInicio };
+}
+
+// Ventana deslizante: calcula la primera ventana y luego suma el dia que entra
+// y resta el que sale. Tiempo O(n), espacio O(1).
+// En un empate gana la primera semana (comparacion estricta).
+function mejorSemana(dias, k) {
+    if (k <= 0 || k > dias.length) {
+        return null;
+    }
+    let suma = 0;
+    for (let i = 0; i < k; i++) {
+        suma = suma + dias[i];
+    }
+    let mejorTotal = suma;
+    let mejorInicio = 1;
+    for (let i = k; i < dias.length; i++) {
+        suma = suma + dias[i] - dias[i - k];
+        if (suma > mejorTotal) {
+            mejorTotal = suma;
+            mejorInicio = i - k + 2;
+        }
+    }
+    return { total: mejorTotal, inicio: mejorInicio };
+}
+
+// Dos punteros sobre el catalogo ordenado por precio (de menor a mayor).
+// Devuelve los dos productos cuya suma es la mayor posible sin superar el presupuesto,
+// o null si no hay solucion. Ordenar cuesta O(n log n); los punteros, O(n).
+function parMasCercano(catalogo, presupuesto) {
+    if (catalogo.length < 2) {
+        return null;
+    }
+    const ordenado = [...catalogo].sort((a, b) => a.precio - b.precio);
+    let izq = 0;
+    let der = ordenado.length - 1;
+    let mejorPar = null;
+    let mejorSuma = -1;
+    while (izq < der) {
+        const suma = ordenado[izq].precio + ordenado[der].precio;
+        if (suma > presupuesto) {
+            der--;
+        } else {
+            if (suma > mejorSuma) {
+                mejorSuma = suma;
+                mejorPar = [ordenado[izq], ordenado[der]];
+            }
+            izq++;
+        }
+    }
+    return mejorPar;
+}
+//Termina el uso de la I.A
+
+module.exports = {valorVenta, totalVendido, unidadesVendidas, ventaMayor, ticketPromedio, ventasPorCiudad, totalVendidoM, unidadesVendidasM, ventasPorCiudadM, compFunciones, totalPorCiudad, unidadesPorProducto, topProductosPorValor, ventasDelDia, totalVendidoI, ventaMayorI, totalPorCiudadI, primerVentaI, clientesRecurrentes, totalCiudadUnaPasada,totalCiudadCadena, clientesRecurrentesSet, comprasPorCliente, clientesRecurrentesMap, comboRegaloFuerzaBruta, comboRegalo, productoEstrellaPorCiudad,primerClienteUnico, mejorSemanaBruta, mejorSemana, parMasCercano};

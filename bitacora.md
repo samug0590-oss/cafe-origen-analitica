@@ -521,3 +521,93 @@ Justificacion: dos recorridos de n elementos suman 2n, y Big O elimina la consta
 | primerClienteUnico        | O(n)   | O(c)     | dos recorridos (2n = O(n)) y un Map con los clientes distintos                  |
 
 Conclusion: las tres funciones pedidas son O(n) en tiempo. La unica cuadratica es la fuerza bruta de los combos, que sirve de referencia para comprobar la correccion de la version con Map. En los tres casos el patron es el mismo del Minireto 9: se cambia una busqueda lenta por una consulta O(1) en un Map, a cambio de memoria proporcional a los datos distintos.
+
+## Minireto 11: la mejor racha y el presupuesto exacto
+
+### 1. Datos
+Los totales diarios de septiembre (30 dias, en miles de pesos) estan en src/ventasDiarias.js. El catalogo de productos es el de src/catalogo.js (Minireto 10).
+
+### 2. mejorSemanaBruta (referencia)
+Idea: para cada posible inicio, suma los k dias del bloque desde cero y se queda con el mayor total.
+Que devuelve: un objeto con el total y el dia de inicio (1 = primer dia del arreglo), o null si no cabe ninguna ventana.
+Complejidad: tiempo O(n x k), espacio O(1).
+Justificacion: hay n - k + 1 ventanas y cada una se suma con un ciclo de k pasos. Si k es fijo (7), es lineal en la practica, pero cuando k crece con los datos (por ejemplo k = n / 2) se acerca a O(n^2). Se suman muchas veces los mismos dias.
+
+### 3. mejorSemana (ventana deslizante)
+Idea: se calcula la primera ventana una sola vez. Para pasar a la siguiente, se suma el dia que entra y se resta el que sale, en lugar de volver a sumar los k dias.
+Que devuelve: igual que la bruta: { total, inicio }.
+Complejidad: tiempo O(n), espacio O(1).
+Justificacion: la primera ventana cuesta k pasos y despues cada dia entra una vez y sale una vez, con una suma y una resta por vuelta. El costo no depende de k. Solo usa unas pocas variables (suma, mejorTotal, mejorInicio).
+Desempate: si dos semanas suman lo mismo, gana la primera, porque la comparacion es estricta (mayor que). La bruta usa la misma regla, por eso coinciden siempre.
+Detalle cuidadoso: el ultimo dia (indice n - 1) debe entrar a la ventana, o se pierde la ultima semana. En septiembre la mejor semana es justamente la ultima.
+
+### 4. Las tres primeras posiciones de la ventana (k = 7)
+
+Dias:  1    2    3    4    5    6    7    8    9    10
+       320  410  280  390  510  620  700  300  290  450
+
+Posicion 1: dias 1 a 7  -> [320 410 280 390 510 620 700] = 3.230
+Posicion 2: dias 2 a 8  -> sale 320, entra 300  -> 3.230 - 320 + 300 = 3.210
+Posicion 3: dias 3 a 9  -> sale 410, entra 290  -> 3.210 - 410 + 290 = 3.090
+
+| Posicion | Dias  | Sale | Entra | Total |
+|----------|-------|------|-------|-------|
+| 1        | 1 a 7 | -    | -     | 3.230 |
+| 2        | 2 a 8 | 320  | 300   | 3.210 |
+| 3        | 3 a 9 | 410  | 290   | 3.090 |
+
+### 5. Resultado para septiembre
+La mejor semana de septiembre es la que inicia el dia 24 (del 24 al 30), con un total de 3.670 miles de pesos ($3.670.000). Las dos versiones devuelven exactamente el mismo resultado. Comprobado a mano: 440 + 500 + 590 + 650 + 720 + 400 + 370 = 3.670.
+Casos borde (devuelven null las dos versiones): k mayor que el numero de dias, k igual a 0 o negativo, y arreglo de dias vacio. Con k = 1 el resultado es el mejor dia (720, el dia 28) y con k = 30 la ventana es todo el mes (14.460, dia 1).
+
+### 6. Comparacion con 100.000 dias al azar
+Se generaron 100.000 dias con valores entre 200 y 800. Ambas versiones devolvieron el mismo total y el mismo dia de inicio.
+
+| k    | Fuerza bruta (ms)                | Ventana deslizante (ms)          |
+|------|----------------------------------|----------------------------------|
+| 7    | (copia el tiempo de tu terminal) | (copia el tiempo de tu terminal) |
+| 1000 | (copia el tiempo de tu terminal) | (copia el tiempo de tu terminal) |
+
+Analisis: con k = 7 la diferencia es pequena porque 7 es una constante. Con k = 1000 la fuerza bruta hace unos 100 millones de sumas (100.000 x 1.000) mientras que la ventana sigue haciendo unas 100.000 operaciones, y el tiempo de la bruta crece con k mientras el de la ventana casi no cambia. Esto confirma O(n x k) contra O(n).
+
+### 7. parMasCercano (dos punteros)
+Idea: se ordena una copia del catalogo por precio de menor a mayor (sort con funcion de comparacion numerica, sin alterar el catalogo original) y se ponen dos punteros, uno en el extremo izquierdo (el mas barato) y otro en el derecho (el mas caro). Mientras izquierdo < derecho se suman los dos precios:
+- Si la suma supera el presupuesto, el producto de la derecha es demasiado caro incluso emparejado con el mas barato que queda; se descarta y el puntero derecho retrocede.
+- Si la suma cabe, se guarda como mejor si supera a la mejor anterior, y el puntero izquierdo avanza: con ese producto de la izquierda ya no hay una pareja mejor (cualquier otro producto a la derecha seria mas barato) y se prueba uno mas caro.
+Que devuelve: un arreglo con los dos productos, o null si ninguna pareja cabe en el presupuesto.
+Casos borde: catalogo con menos de 2 productos, presupuesto insuficiente y presupuesto 0 o negativo devuelven null.
+
+Pruebas:
+| Presupuesto | Resultado                                 | Suma                                                    |
+|-------------|-------------------------------------------|---------------------------------------------------------|
+| 100.000     | Filtros de papel x100 + Origen Huila 1 kg | 97.000                                                  |
+| 140.000     | Origen Sierra 500 g + Prensa francesa     | 140.000 (exacto)                                        |
+| 40.000      | null                                      | la pareja mas barata (18.000 + 26.000) ya cuesta 44.000 |
+
+Se comparo con una fuerza bruta (todos los pares) para presupuestos de 0 a 250.000 en saltos de 500 y las sumas coincidieron en todos.
+
+### 8. Traza de los punteros para 100.000
+Catalogo ordenado por precio: indice 0 Filtros (18.000), 1 Narino 250 g (26.000), 2 Taza (35.000), 3 Huila 500 g (42.000), 4 Sierra 500 g (45.000), 5 Huila 1 kg (79.000), 6 Prensa (95.000), 7 Molino (120.000).
+
+| Paso | Izq        | Der         | Suma    | Comparacion con 100.000  | Que se hace y por que                                                                                   | Mejor hasta ahora |
+|------|------------|-------------|---------|--------------------------|---------------------------------------------------------------------------------------------------------|-------------------|
+| 1    | 0 (18.000) | 7 (120.000) | 138.000 | se pasa                  | el Molino no cabe ni con el mas barato: se descarta, der baja                                           | ninguna           |
+| 2    | 0 (18.000) | 6 (95.000)  | 113.000 | se pasa                  | la Prensa tampoco cabe con el mas barato: der baja                                                      | ninguna           |
+| 3    | 0 (18.000) | 5 (79.000)  | 97.000  | cabe                     | se guarda como mejor; los filtros ya no pueden mejorar con nadie mas barato que el Huila 1 kg: izq sube | 97.000            |
+| 4    | 1 (26.000) | 5 (79.000)  | 105.000 | se pasa                  | el Huila 1 kg no cabe con el Narino: der baja                                                           | 97.000            |
+| 5    | 1 (26.000) | 4 (45.000)  | 71.000  | cabe                     | no supera 97.000: izq sube                                                                              | 97.000            |
+| 6    | 2 (35.000) | 4 (45.000)  | 80.000  | cabe                     | no supera 97.000: izq sube                                                                              | 97.000            |
+| 7    | 3 (42.000) | 4 (45.000)  | 87.000  | cabe                     | no supera 97.000: izq sube                                                                              | 97.000            |
+| 8    | 4          | 4           | -       | los punteros se cruzaron | termina                                                                                                 | 97.000            |
+
+Resultado: Filtros de papel x100 + Origen Huila 1 kg = 97.000, sin superar 100.000. En total los punteros hicieron 7 sumas (como maximo n - 1), cada uno movido por una razon: der baja cuando la suma se pasa y izq sube cuando la suma cabe.
+
+### 9. Clasificacion de complejidad
+
+| Funcion          | Tiempo     | Espacio | Justificacion                                                                                                                                                    |
+|------------------|------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| mejorSemanaBruta | O(n x k)   | O(1)    | un ciclo de ventanas y dentro otro de k sumas; solo usa acumuladores                                                                                             |
+| mejorSemana      | O(n)       | O(1)    | un solo recorrido: cada dia entra y sale una vez, con una suma y una resta; no depende de k                                                                      |
+| parMasCercano    | O(n log n) | O(n)    | ordenar domina: sort cuesta O(n log n) y la fase de dos punteros solo O(n) (cada vuelta mueve un puntero, a lo sumo n - 1 vueltas); la copia ordenada ocupa O(n) |
+
+Conclusion: la ventana deslizante evita recalcular lo que no cambia, y los dos punteros aprovechan que los datos estan ordenados para descartar candidatos sin probar todos los pares (el equivalente por fuerza bruta seria O(n^2)). El costo de ordenar es lo que hace que parMasCercano sea O(n log n) y no O(n); si el catalogo llegara ya ordenado, bastaria O(n).
